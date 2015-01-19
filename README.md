@@ -1,10 +1,5 @@
 # CedarMap
 
-[![CI Status](http://img.shields.io/travis/Emad A./CedarMap.svg?style=flat)](https://travis-ci.org/Emad A./CedarMap)
-[![Version](https://img.shields.io/cocoapods/v/CedarMap.svg?style=flat)](http://cocoadocs.org/docsets/CedarMap)
-[![License](https://img.shields.io/cocoapods/l/CedarMap.svg?style=flat)](http://cocoadocs.org/docsets/CedarMap)
-[![Platform](https://img.shields.io/cocoapods/p/CedarMap.svg?style=flat)](http://cocoadocs.org/docsets/CedarMap)
-
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
