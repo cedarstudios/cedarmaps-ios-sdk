@@ -1,0 +1,9 @@
+{
+    "maxzoom":18,
+    "minzoom":11,
+    "private":true,
+    "scheme":"xyz",
+    "id":"cedar.studio.map",
+    "name":"CedarMap iOS Example",
+    "tiles":["http://tiles.kikojas.com/v1.1/{z}/{x}/{y}.png"]
+}
