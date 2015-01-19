@@ -37,8 +37,10 @@
 #pragma mark
 
 - (void)prepareForUse {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"csmap" ofType:@"json"];
-    NSURL *sourceRefURL = [NSURL fileURLWithPath:bundlePath];
+
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"CedarMap" ofType:@"bundle"];
+    NSBundle *resourcesBundle = [NSBundle bundleWithPath:bundlePath];
+    NSURL *sourceRefURL = [NSURL fileURLWithPath:[resourcesBundle pathForResource:@"csmap" ofType:@"json"]];
     RMMapboxSource *source = [[RMMapboxSource alloc] initWithReferenceURL:sourceRefURL];
 
     self.tileSource = source;

@@ -35,7 +35,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self.mapView setZoom:16 animated:YES];
+    [self.mapView setZoom:14 animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
