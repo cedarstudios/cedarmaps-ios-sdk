@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Mapbox.h"
 
-@interface CSMapSample : RMMapView
+@interface CSMapView : RMMapView
 
 @property (nonatomic, assign) BOOL showLogoBug      __attribute__((unavailable));
 @property (nonatomic, assign) BOOL hideAttribution  __attribute__((unavailable));

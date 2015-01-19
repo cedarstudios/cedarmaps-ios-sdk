@@ -6,13 +6,9 @@
 //
 //
 
-#import "CSMapSample.h"
+#import "CSMapView.h"
 
-@interface CSMapSample ()
-
-@end
-
-@implementation CSMapSample
+@implementation CSMapView
 
 - (id)init {
     self = [super init];

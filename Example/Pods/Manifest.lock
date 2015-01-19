@@ -1,5 +1,5 @@
 PODS:
-  - CedarMap (0.1.0):
+  - CedarMap (0.0.1):
     - Mapbox-iOS-SDK (~> 1.5.0)
   - FMDB (2.3):
     - FMDB/standard (= 2.3)
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CedarMap: 28d3bd7206bc1698c07f2bdeb60f1be107cc461e
+  CedarMap: ef3c5e4e80f032ef44a92c00ec223af15bdbb747
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
   GRMustache: ab96109b7ba4b9568425bea40d6cd2cdc7582b6c
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5

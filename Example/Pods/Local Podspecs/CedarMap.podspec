@@ -9,15 +9,13 @@
 
 Pod::Spec.new do |s|
   s.name             = "CedarMap"
-  s.version          = "0.1.0"
+  s.version          = "0.0.1"
   s.summary          = "Cedar Studio iOS SDK"
   s.description      = "Cedar Studio should write something to introduce their Pod."
   s.homepage         = "http://cedar.ir"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Emad A." => "emad310@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/CedarMap.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://codeisjoy@bitbucket.org/codeisjoy/cedarmap.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true

@@ -14,7 +14,7 @@
 
 @interface CSViewController ()
 
-@property (nonatomic, strong) CSMapSample *mapView;
+@property (nonatomic, strong) CSMapView *mapView;
 
 @end
 
@@ -28,7 +28,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.mapView = [[CSMapSample alloc] initWithFrame:self.view.bounds];
+    self.mapView = [[CSMapView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.mapView];
 }
 
