@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "CedarMap"
-  s.version          = "0.0.1"
+  s.version          = "0.0.11"
   s.summary          = "Cedar Studio iOS SDK"
   s.description      = "Cedar Studio should write something to introduce their Pod."
   s.homepage         = "http://cedar.ir"
