@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.homepage         = "http://cedar.ir"
   s.license          = 'MIT'
   s.author           = { "Emad A." => "emad310@gmail.com" }
-  s.source           = { :git => "https://codeisjoy@bitbucket.org/codeisjoy/cedarmap.git", :tag => s.version.to_s }
+  s.source           = { :git => "http://gitlab.kikojas.com/cedar.studios/cedarmaps-sdk-ios.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
