@@ -35,7 +35,20 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self.mapView setZoom:14 animated:YES];
+    [self.mapView setZoom:16 animated:YES];
+
+    // Street Search Example
+
+    CSMapSource *source = (CSMapSource *)self.mapView.tileSource;
+    CSQueryParameters *params = [CSQueryParameters new];
+    [params addCity:@"Sydney"];
+    [params addDistance:5000];
+    [params addLimit:9];
+    [params addLocationWithLatitude:123 longitude:45.678];
+    [source searchStreetWithQueryString:@"همت" parameters:params completion:^(NSDictionary *result, NSError *error) {
+        NSLog(@"result: %@",result);
+        NSLog(@"error: %@",error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning

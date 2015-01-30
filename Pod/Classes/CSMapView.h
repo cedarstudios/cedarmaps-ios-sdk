@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CSMapSource.h"
 #import "Mapbox.h"
 
 @interface CSMapView : RMMapView

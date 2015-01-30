@@ -41,7 +41,7 @@
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"CedarMap" ofType:@"bundle"];
     NSBundle *resourcesBundle = [NSBundle bundleWithPath:bundlePath];
     NSURL *sourceRefURL = [NSURL fileURLWithPath:[resourcesBundle pathForResource:@"csmap" ofType:@"json"]];
-    RMMapboxSource *source = [[RMMapboxSource alloc] initWithReferenceURL:sourceRefURL];
+    CSMapSource *source = [[CSMapSource alloc] initWithReferenceURL:sourceRefURL];
 
     self.tileSource = source;
     self.centerCoordinate = CLLocationCoordinate2DMake(35.757552763570196,  51.41000747680664);
