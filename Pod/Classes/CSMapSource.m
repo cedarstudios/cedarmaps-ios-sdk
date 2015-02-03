@@ -9,6 +9,7 @@
 #import "CSMapSource.h"
 
 static NSString * const kBaseURL = @"http://maps.cedar.ir/api/v1";
+static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png";
 
 #pragma mark - CSQueryParameters Private Interface
 #pragma mark
@@ -34,6 +35,23 @@ static NSString * const kBaseURL = @"http://maps.cedar.ir/api/v1";
 #pragma mark
 
 @implementation CSMapSource
+
+- (NSURL *)URLForTile:(RMTile)tile
+{
+    NSNumber *x = [NSNumber numberWithInteger:tile.x];
+    NSNumber *y = [NSNumber numberWithInteger:tile.y];
+    NSNumber *z = [NSNumber numberWithInteger:tile.zoom];
+
+    NSString *tileURLString = [NSString stringWithFormat:kTileURL, z, x, y];
+
+    if ([[UIScreen mainScreen] scale] > 1.0) {
+        tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+    }
+
+    return [NSURL URLWithString:tileURLString];
+}
+
+#pragma mark
 
 - (void)searchStreetWithQueryString:(NSString *)query
                          parameters:(CSQueryParameters *)parameters
@@ -86,6 +104,33 @@ static NSString * const kBaseURL = @"http://maps.cedar.ir/api/v1";
     if (self.searchStreetCompletion != nil) {
         self.searchStreetCompletion(nil, error);
     }
+}
+
+#pragma mark
+
+- (NSString *)uniqueTilecacheKey
+{
+    return @"CedarStudioMap";
+}
+
+- (NSString *)shortName
+{
+    return @"Cedar Studio Map";
+}
+
+- (NSString *)longDescription
+{
+    return @"Cedar Studio Map, blah blah blah ...";
+}
+
+- (NSString *)shortAttribution
+{
+    return @"© Cedar Studio Map";
+}
+
+- (NSString *)longAttribution
+{
+    return @"Map data © CedarStudioMap, licensed under ...";
 }
 
 @end

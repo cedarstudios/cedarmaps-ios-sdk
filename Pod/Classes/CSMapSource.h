@@ -10,7 +10,7 @@
 
 @class CSQueryParameters;
 
-@interface CSMapSource : RMMapboxSource
+@interface CSMapSource : RMAbstractWebMapSource
 
 - (void)searchStreetWithQueryString:(NSString *)query
                          parameters:(CSQueryParameters *)parameters

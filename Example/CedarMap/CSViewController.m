@@ -14,7 +14,7 @@
 
 @interface CSViewController ()
 
-@property (nonatomic, strong) CSMapView *mapView;
+@property (nonatomic, strong) RMMapView *mapView;
 
 @end
 
@@ -28,17 +28,21 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.mapView = [[CSMapView alloc] initWithFrame:self.view.bounds];
+    CSMapSource *source = [[CSMapSource alloc] init];
+
+    self.mapView = [[RMMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView.tileSource = source;
+    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(35.757552763570196, 51.41000747680664);
+
+    //[self.mapView removeAllCachedImages];
     [self.view addSubview:self.mapView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self.mapView setZoom:16 animated:YES];
-
     // Street Search Example
-
+    /*
     CSMapSource *source = (CSMapSource *)self.mapView.tileSource;
     CSQueryParameters *params = [CSQueryParameters new];
     [params addCity:@"Sydney"];
@@ -49,6 +53,7 @@
         NSLog(@"result: %@",result);
         NSLog(@"error: %@",error);
     }];
+     */
 }
 
 - (void)didReceiveMemoryWarning
