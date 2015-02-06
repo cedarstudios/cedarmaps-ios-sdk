@@ -105,7 +105,8 @@
 
         for (NSDictionary *item in results) {
             NSArray *center = [[item objectForKey:@"location"][@"center"] componentsSeparatedByString:@","];
-            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([center[0] doubleValue], [center[0] doubleValue]);
+            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([center[0] doubleValue], [center[1] doubleValue]);
+            NSLog(@"%@",center);
             RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
                                                                 coordinate:coordinate
                                                                   andTitle:[item objectForKey:@"name"]];
