@@ -7,6 +7,7 @@
 //
 
 #import "CSMapSource.h"
+#import "CSAuthenticationManager.h"
 
 static NSString * const kBaseURL = @"http://maps.cedar.ir/api/v1";
 static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png";
@@ -27,7 +28,7 @@ static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png"
 
 @property (nonatomic, strong) NSURLConnection *searchStreetURLConnection;
 @property (nonatomic, strong) NSMutableData *searchStreetResponseData;
-@property (nonatomic, copy) void (^searchStreetCompletion)(NSDictionary *result, NSError *error);
+@property (nonatomic, copy) void (^searchStreetCompletion)(NSArray *results, NSError *error);
 
 @end
 
@@ -48,14 +49,21 @@ static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png"
         tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
     }
 
+    //[[CSAuthenticationManager sharedManager] requestAccessToken];
+
     return [NSURL URLWithString:tileURLString];
 }
+/*
+- (UIImage*)imageForTile:(RMTile)tile inCache:(RMTileCache *)tileCache
+{
 
+}
+*/
 #pragma mark
 
 - (void)searchStreetWithQueryString:(NSString *)query
                          parameters:(CSQueryParameters *)parameters
-                         completion:(void (^)(NSDictionary *, NSError *))completion
+                         completion:(void (^)(NSArray *, NSError *))completion
 {
     self.searchStreetCompletion = completion;
 
@@ -66,7 +74,7 @@ static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png"
         }];
     }
 
-    [URLString appendFormat:@"&key=%@", @"emad"];
+    [URLString appendString:@"&access_token=a40885a896a21fe49e43c771e74dfa1ccb300ce6"];
 
     NSURL *URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
@@ -95,7 +103,15 @@ static NSString * const kTileURL = @"http://tiles.kikojas.com/v1.1/%@/%@/%@.png"
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.searchStreetResponseData options:0 error:&error];
     if (error == nil && self.searchStreetCompletion != nil) {
-        self.searchStreetCompletion(json, nil);
+        NSArray *output = [NSArray array];
+        if ([json.allKeys containsObject:@"results"]) {
+            NSArray *results = [json objectForKey:@"results"];
+            output = results;
+        }
+        self.searchStreetCompletion(output, nil);
+    }
+    else {
+        self.searchStreetCompletion(nil, error);
     }
 }
 

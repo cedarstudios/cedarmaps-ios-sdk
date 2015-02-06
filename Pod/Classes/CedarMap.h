@@ -6,4 +6,7 @@
 //
 //
 
+#import "Mapbox.h"
+
 #import "CSMapSource.h"
+#import "CSAuthenticationManager.h"

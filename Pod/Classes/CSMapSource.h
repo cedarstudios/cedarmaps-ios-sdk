@@ -14,7 +14,7 @@
 
 - (void)searchStreetWithQueryString:(NSString *)query
                          parameters:(CSQueryParameters *)parameters
-                         completion:(void (^)(NSDictionary *result, NSError *error))completion;
+                         completion:(void (^)(NSArray *results, NSError *error))completion;
 
 @end
 
@@ -28,3 +28,5 @@
 - (void)addLocationWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude;
 
 @end
+
+#pragma mark
