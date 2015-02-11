@@ -24,26 +24,32 @@
 {
     [super viewDidLoad];
 
-    CSMapSource *source = [CSMapSource new];
+    CSAuthenticationManager *auth = [CSAuthenticationManager sharedManager];
+    [auth setCredentialsWithClientId:@"user"
+                        clientSecret:@"pass"];
+
+    CSMapSource *source = [[CSMapSource alloc] initWithMapId:@"cedarmaps.streets"];
 
     self.mapView.tileSource = source;
     self.mapView.hideAttribution = YES;
     self.mapView.showLogoBug = NO;
     self.mapView.zoom = 16;
 
-    //[self.mapView removeAllCachedImages];
+    [self.mapView removeAllCachedImages];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
+    /*
     [self markBusStation];
     [self markTrainStation];
     [self markPointNumberOne];
     [self markPointNumberTwo];
     [self markPointNumberThree];
-
+     */
+    
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214);
 }
 

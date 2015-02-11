@@ -8,9 +8,30 @@
 
 #import "CSAuthenticationManager.h"
 
-static NSString * const kBaseURL = @"http://abcdertymaps.cedar.ir/api/v1";
+static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
+static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
+
+@interface CSAuthenticationManager () {
+    NSString *_accessToken;
+}
+
+@end
 
 @implementation CSAuthenticationManager
+
+- (NSString *)accessToken
+{
+    if (_accessToken == nil) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _accessToken = [defaults objectForKey:kCurrentAccessToken];
+
+        if (_accessToken == nil) {
+            [self requestAccessToken:nil];
+        }
+    }
+
+    return _accessToken;
+}
 
 - (void)setCredentialsWithClientId:(NSString *)clientId clientSecret:(NSString *)clientSecret
 {
@@ -18,28 +39,52 @@ static NSString * const kBaseURL = @"http://abcdertymaps.cedar.ir/api/v1";
     NSAssert(clientSecret != nil && clientSecret.length > 0, @"Given Client Secret is not in acceptable format.");
 
     _clientId = clientId;
-    _clientSecure = clientSecret;
+    _clientSecret = clientSecret;
 }
 
-- (void)requestAccessToken
+- (void)requestAccessToken:(NSError *__autoreleasing *)error
 {
     NSAssert(self.clientId      != nil, @"No client id specified. Set your given credentials before trying to get an access token.");
-    NSAssert(self.clientSecure  != nil, @"No client Secret specified. Set your given credentials before trying to get an access token.");
+    NSAssert(self.clientSecret  != nil, @"No client Secret specified. Set your given credentials before trying to get an access token.");
 
-    NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@", self.clientId, self.clientSecure];
+    NSString *params = [NSString stringWithFormat:@"client_id=%@&client_secret=%@", self.clientId, self.clientSecret];
     params = [params stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    NSURL *tokenURL = [NSURL URLWithString:kBaseURL];
+    NSURL *tokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/token", kBaseURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:tokenURL];
     [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPMethod:@"POST"];
 
-    NSError *error = nil;
-    NSURLResponse *response = nil;
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSError *responseError = nil;
+    NSHTTPURLResponse *response = nil;
+    NSData *token = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&responseError];
 
-    NSLog(@"response: %@",response);
-    NSLog(@"error: %@",error);
+    if (response.statusCode == 200) {
+        NSError *serializationError = nil;
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:token options:0 error:&serializationError];
+        if (serializationError != nil && error != nil) {
+            *error = serializationError;
+            return;
+        }
+
+        _accessToken = result[@"access_token"];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:_accessToken forKey:kCurrentAccessToken];
+        [defaults synchronize];
+    }
+    else if (responseError != nil && error != nil) {
+        *error = responseError;
+    }
+}
+
+- (void)invalidateCredential
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kCurrentAccessToken];
+    [defaults synchronize];
+
+    _accessToken = nil;
 }
 
 #pragma mark - Singleton Methods

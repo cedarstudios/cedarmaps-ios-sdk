@@ -6,15 +6,28 @@
 //
 //
 
-#import "RMMapboxSource.h"
+#import "Mapbox.h"
 
 @class CSQueryParameters;
 
+/* An CSMapSource is used to display map tiles from a network-based map hosted on Cedar Map.
+ * Map should be referenced by their map ID.
+ */
+
 @interface CSMapSource : RMAbstractWebMapSource
 
-- (void)searchStreetWithQueryString:(NSString *)query
-                         parameters:(CSQueryParameters *)parameters
-                         completion:(void (^)(NSArray *results, NSError *error))completion;
+@property (nonatomic, copy, readonly) NSString *mapId;
+
+@property (nonatomic, readonly) NSString *version;
+@property (nonatomic, readonly) RMSphericalTrapezium bounds;
+
+- (id)initWithMapId:(NSString *)mapId;
+- (id)initWithMapId:(NSString *)mapId enablingDataOnMapView:(RMMapView *)mapView;
+- (void)forwardGeocodingWithQueryString:(NSString *)query
+                             parameters:(CSQueryParameters *)parameters
+                             completion:(void (^)(NSArray *results, NSError *error))completion;
+- (void)reverseGeocodingWithCoordinate:(CLLocationCoordinate2D)coordinate
+                            completion:(void (^)(NSDictionary *result, NSError *error))completion;
 
 @end
 
@@ -29,4 +42,4 @@
 
 @end
 
-#pragma mark
+#define CSMapSourceErrorNotification @"CSMapSourceErrorNotification"

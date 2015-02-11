@@ -11,12 +11,13 @@
 @interface CSAuthenticationManager : NSObject
 
 @property (nonatomic, copy, readonly) NSString *clientId;
-@property (nonatomic, copy, readonly) NSString *clientSecure;
+@property (nonatomic, copy, readonly) NSString *clientSecret;
 
 @property (nonatomic, copy, readonly) NSString *accessToken;
 
-- (void)requestAccessToken;
 - (void)setCredentialsWithClientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
+- (void)requestAccessToken:(NSError *__autoreleasing *)error;
+- (void)invalidateCredential;
 
 + (CSAuthenticationManager *)sharedManager;
 

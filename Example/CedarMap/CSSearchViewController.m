@@ -34,7 +34,7 @@
     self.searchView.alpha = .95;
 
     // Initializing map source
-    self.mapSource = [CSMapSource new];
+    self.mapSource = [[CSMapSource alloc] initWithMapId:@"cedarmaps.streets"];
 
     // Setting map view properties
     self.mapView.tileSource = self.mapSource;
@@ -89,7 +89,7 @@
 {
     CSQueryParameters *params = [CSQueryParameters new];
     [params addLocationWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
-    [self.mapSource searchStreetWithQueryString:query parameters:params completion:^(NSArray *results, NSError *error) {
+    [self.mapSource forwardGeocodingWithQueryString:query parameters:params completion:^(NSArray *results, NSError *error) {
         [self.spinner stopAnimating];
         
         if (error != nil) {
@@ -106,7 +106,6 @@
         for (NSDictionary *item in results) {
             NSArray *center = [[item objectForKey:@"location"][@"center"] componentsSeparatedByString:@","];
             CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([center[0] doubleValue], [center[1] doubleValue]);
-            NSLog(@"%@",center);
             RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
                                                                 coordinate:coordinate
                                                                   andTitle:[item objectForKey:@"name"]];
