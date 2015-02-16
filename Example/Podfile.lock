@@ -1,5 +1,5 @@
 PODS:
-  - CedarMap (0.0.11):
+  - CedarMap (0.1.0):
     - Mapbox-iOS-SDK (~> 1.5.0)
   - FMDB (2.3):
     - FMDB/standard (= 2.3)
@@ -16,14 +16,10 @@ PODS:
   - SMCalloutView (2.0)
 
 DEPENDENCIES:
-  - CedarMap (from `../`)
-
-EXTERNAL SOURCES:
-  CedarMap:
-    :path: ../
+  - CedarMap (~> 0.1.0)
 
 SPEC CHECKSUMS:
-  CedarMap: f3a1285da2187a31dba1463207fea9386663680b
+  CedarMap: 8dea158a2ffe386e97940f94e89ef1b434bdafc5
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
   GRMustache: ab96109b7ba4b9568425bea40d6cd2cdc7582b6c
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5

@@ -44,6 +44,16 @@
                                     <outlet property="delegate" destination="hj0-IR-2tU" id="tug-86-dpa"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bV6-3P-wiJ">
+                                <rect key="frame" x="0.0" y="490" width="170" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <state key="normal" image="attribution">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="attributionDidTouchUpInside:" destination="hj0-IR-2tU" eventType="touchUpInside" id="R1V-1t-l6a"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -70,6 +80,18 @@
                             <view contentMode="scaleToFill" id="jSh-jc-HHQ" customClass="RMMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="G88-Us-ELx">
+                                        <rect key="frame" x="0.0" y="490" width="170" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="attribution">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="attributionDidTouchUpInside:" destination="zHL-Jq-Uo2" eventType="touchUpInside" id="UJy-H4-e8g"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="zHL-Jq-Uo2" id="bk3-ul-kd4"/>
@@ -107,6 +129,9 @@
             <point key="canvasLocation" x="-315" y="335"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="attribution" width="158" height="22"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

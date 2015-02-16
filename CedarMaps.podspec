@@ -8,7 +8,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "CedarMap"
+  s.name             = "CedarMaps"
   s.version          = "0.1.0"
   s.summary          = "Cedar Studio iOS SDK"
   s.description      = "Cedar Studio should write something to introduce their Pod."

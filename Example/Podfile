@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'CedarMap', :exclusive => true do
-  pod "CedarMap", :path => "../"
+  pod 'CedarMap', '~> 0.1.0'
 end
 
 target 'Tests', :exclusive => true do
-  pod "CedarMap", :path => "../"
+  pod 'CedarMap', '~> 0.1.0'
 
   
 end
