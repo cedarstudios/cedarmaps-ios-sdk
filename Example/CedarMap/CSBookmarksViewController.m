@@ -53,7 +53,12 @@
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214);
 }
 
-#pragma mark - 
+#pragma mark
+
+- (IBAction)attributionDidTouchUpInside:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://cedarmaps.com"]];
+}
 
 #pragma mark - RMMapViewDelegate Methods
 

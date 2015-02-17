@@ -56,6 +56,13 @@
     }
 }
 
+#pragma mark
+
+- (IBAction)attributionDidTouchUpInside:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://cedarmaps.com"]];
+}
+
 #pragma mark - UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
