@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'CedarMap', :exclusive => true do
-  pod 'CedarMap', '~> 0.1.0'
+target 'CedarMaps', :exclusive => true do
+    pod 'CedarMaps', '~> 0.1.0'
 end
 
 target 'Tests', :exclusive => true do
-  pod 'CedarMap', '~> 0.1.0'
+    pod 'CedarMaps', '~> 0.1.0'
 
   
 end
