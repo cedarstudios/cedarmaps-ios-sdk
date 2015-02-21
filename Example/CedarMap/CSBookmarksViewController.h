@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CedarMap.h"
+#import "CedarMaps.h"
 
 @interface CSBookmarksViewController : UIViewController
 

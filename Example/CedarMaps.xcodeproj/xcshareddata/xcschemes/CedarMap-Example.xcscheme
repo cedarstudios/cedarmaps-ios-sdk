@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F589195388D20070C39A"
-               BuildableName = "CedarMap.app"
-               BlueprintName = "CedarMap"
-               ReferencedContainer = "container:CedarMap.xcodeproj">
+               BuildableName = "CedarMapss.app"
+               BlueprintName = "CedarMaps"
+               ReferencedContainer = "container:CedarMaps.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
-               ReferencedContainer = "container:CedarMap.xcodeproj">
+               ReferencedContainer = "container:CedarMaps.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "CedarMap.app"
-            BlueprintName = "CedarMap"
-            ReferencedContainer = "container:CedarMap.xcodeproj">
+            BuildableName = "CedarMapss.app"
+            BlueprintName = "CedarMaps"
+            ReferencedContainer = "container:CedarMaps.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -58,13 +58,14 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "CedarMap.app"
-            BlueprintName = "CedarMap"
-            ReferencedContainer = "container:CedarMap.xcodeproj">
+            BuildableName = "CedarMapss.app"
+            BlueprintName = "CedarMaps"
+            ReferencedContainer = "container:CedarMaps.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -76,13 +77,14 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "CedarMap.app"
-            BlueprintName = "CedarMap"
-            ReferencedContainer = "container:CedarMap.xcodeproj">
+            BuildableName = "CedarMapss.app"
+            BlueprintName = "CedarMaps"
+            ReferencedContainer = "container:CedarMaps.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
