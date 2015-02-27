@@ -312,12 +312,12 @@ static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
 
 - (float)maxZoom
 {
-    return [self.info[@"MaxZoom"] floatValue] ?: 17;
+    return [self.info[@"maxzoom"] floatValue] ?: 17;
 }
 
 - (float)minZoom
 {
-    return [self.info[@"minZoom"] floatValue] ?: 11;
+    return [self.info[@"minzoom"] floatValue] ?: 11;
 }
 
 - (RMSphericalTrapezium)bounds
