@@ -81,8 +81,12 @@ static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
     tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@"{x}" withString:x.stringValue];
     tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@"{y}" withString:y.stringValue];
 
-    if ([[UIScreen mainScreen] scale] > 1.0) {
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    if (scale > 1.0) {
         tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@".png" withString:@"@2x.png"];
+    }
+    else if (scale > 2.0) {
+        tileURLString = [tileURLString stringByReplacingOccurrencesOfString:@".png" withString:@"@3x.png"];
     }
 
     return [NSURL URLWithString:tileURLString];
