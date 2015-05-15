@@ -9,11 +9,16 @@ To use CedarStudio Map you need a pair of client ID and secret which is needed a
 	CSAuthenticationManager *auth = [CSAuthenticationManager sharedManager];
 	[auth setCredentialsWithClientId:@“<your client Id>“ clientSecret:@“<your client secret>”];
 
+If your project has its own base URL which is not the one SDK provides, you can set that here:
+
+	auth.baseURL = @"http://api.myowncedarmaps.com/v1“;
+
 Then an instance of CSMapSource should be initialised:
 
 	CSMapSource *source = [[CSMapSource alloc] initWithMapId:@"cedarmaps.streets"];
 
 ``MapId`` actually is the style of will be shown by source and could be anything but at the moment the only accepted value is ``cedarmaps.streets``. We will add other values and style latter.
+
 
 The map source instance will be used as tile source for a ``RMMapView``:
 	

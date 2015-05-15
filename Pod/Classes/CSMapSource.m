@@ -12,8 +12,6 @@
 #define HTTP_404_NOT_FOUND      404
 #define HTTP_401_NOT_AUTHORIZED 401
 
-static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
-
 #pragma mark - CSQueryParameters Private Interface
 #pragma mark
 
@@ -149,7 +147,7 @@ static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
 
 - (BOOL)loadTileJSON
 {
-    NSString *tileJSONURLString = [NSString stringWithFormat:@"%@/tiles/%@.json", kBaseURL, self.mapId];
+    NSString *tileJSONURLString = [NSString stringWithFormat:@"%@/tiles/%@.json", [[CSAuthenticationManager sharedManager] baseURL] , self.mapId];
     tileJSONURLString = [tileJSONURLString stringByAppendingFormat:@"?access_token=%@", [[CSAuthenticationManager sharedManager] accessToken]];
 
     NSError *error = nil;
@@ -186,7 +184,7 @@ static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
 {
     self.forwardGeocodingCompletion = completion;
 
-    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@.json", kBaseURL, self.mapId, query];
+    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@.json", [[CSAuthenticationManager sharedManager] baseURL], self.mapId, query];
     if (parameters != nil) {
         [URLString appendString:@"?"];
         [parameters.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -214,7 +212,7 @@ static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
     self.reverseGeocodingCompletion = completion;
 
     NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@,%@.json",
-                                  kBaseURL, self.mapId, @(coordinate.latitude), @(coordinate.longitude)];
+                                  [[CSAuthenticationManager sharedManager] baseURL], self.mapId, @(coordinate.latitude), @(coordinate.longitude)];
 
     NSURL *URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];

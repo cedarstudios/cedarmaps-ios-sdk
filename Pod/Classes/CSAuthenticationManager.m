@@ -19,6 +19,16 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
 
 @implementation CSAuthenticationManager
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self != nil) {
+        self.baseURL = kBaseURL.copy;
+    }
+
+    return self;
+}
+
 - (NSString *)accessToken
 {
     if (_accessToken == nil) {
@@ -50,7 +60,7 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
     NSString *params = [NSString stringWithFormat:@"client_id=%@&client_secret=%@", self.clientId, self.clientSecret];
     params = [params stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    NSURL *tokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/token", kBaseURL]];
+    NSURL *tokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/token", self.baseURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:tokenURL];
     [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPMethod:@"POST"];

@@ -14,6 +14,7 @@
 @property (nonatomic, copy, readonly) NSString *clientSecret;
 
 @property (nonatomic, copy, readonly) NSString *accessToken;
+@property (nonatomic, copy) NSString *baseURL;
 
 - (void)setCredentialsWithClientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
 - (void)requestAccessToken:(NSError *__autoreleasing *)error;
