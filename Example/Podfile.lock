@@ -1,5 +1,5 @@
 PODS:
-  - CedarMaps (0.1.2):
+  - CedarMaps (0.1.5):
     - Mapbox-iOS-SDK (~> 1.5.0)
   - FMDB (2.3):
     - FMDB/standard (= 2.3)
@@ -16,14 +16,25 @@ PODS:
   - SMCalloutView (2.0)
 
 DEPENDENCIES:
-  - CedarMaps (~> 0.1.0)
+  - CedarMaps (from `http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git`)
+
+EXTERNAL SOURCES:
+  CedarMaps:
+    :git: http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git
+
+CHECKOUT OPTIONS:
+  CedarMaps:
+    :commit: 6f85015ad7a9219a7049d1dc96d73a45eb1db608
+    :git: http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git
 
 SPEC CHECKSUMS:
-  CedarMaps: f1b3c6a18af02722bdc9e134cd1f13b023a7345c
-  FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
-  GRMustache: ab96109b7ba4b9568425bea40d6cd2cdc7582b6c
-  JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
-  Mapbox-iOS-SDK: 78612041d438b10be1e4ba1a21e39a24bc874ab0
-  SMCalloutView: c1906604d47c058400ade5c9d52ab98aa77b7e76
+  CedarMaps: cdb5e7b32a3a48cafa2bbb6f1b14c8cf181e8b35
+  FMDB: e78c5941bb10563f2b707255119e3655e790c29e
+  GRMustache: 3840864eb8c23b07bbdbcbc469f11bb1210d6f13
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Mapbox-iOS-SDK: c8f6353fb999a6b6fb22856a6d26ba36c3c87fd1
+  SMCalloutView: f758edd824b18bf4f42de00df1e299861a2d1950
 
-COCOAPODS: 0.35.0
+PODFILE CHECKSUM: 5645086d63b7607a7b89b38c279867437e2d5bdd
+
+COCOAPODS: 1.0.0.beta.3

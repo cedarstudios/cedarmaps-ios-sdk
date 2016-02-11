@@ -15,9 +15,9 @@ Pod::Spec.new do |s|
   s.homepage         = "http://cedar.ir"
   s.license          = 'MIT'
   s.author           = { "Emad A." => "emad310@gmail.com" }
-  s.source           = { :git => "http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios.git", :tag => s.version.to_s }
+  s.source           = { :git => "http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '7.1'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes'
@@ -27,5 +27,5 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
-  s.dependency 'Mapbox-iOS-SDK', '~> 1.5.0'
+  s.dependency 'Mapbox-iOS-SDK', '~> 1.6.1'
 end
