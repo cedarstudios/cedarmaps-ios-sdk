@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "CedarMaps"
-  s.version          = "0.1.5"
+  s.version          = "0.1.6"
   s.summary          = "Cedar Studio iOS SDK"
   s.description      = "Cedar Studio should write something to introduce their Pod."
   s.homepage         = "http://cedar.ir"
@@ -27,5 +27,5 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
-  s.dependency 'Mapbox-iOS-SDK', '~> 1.6.1'
+  s.dependency 'Mapbox-iOS-SDK', '1.6.0'
 end
