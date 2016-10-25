@@ -20,7 +20,6 @@ Pod::Spec.new do |s|
   s.framework = 'UIKit'
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-  s.resource_bundles = { 'CedarMap' => ['Pod/Assets/*.png' ] }
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.dependency 'Mapbox-iOS-SDK', '~> 3.3.4'
 end
