@@ -8,24 +8,19 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "CedarMaps"
-  s.version          = "0.1.6"
-  s.summary          = "Cedar Studio iOS SDK"
-  s.description      = "Cedar Studio should write something to introduce their Pod."
-  s.homepage         = "http://cedar.ir"
+  s.name             = 'CedarMaps'
+  s.version          = '1.0.0'
+  s.cocoapods_version = '>= 0.36'
   s.license          = 'MIT'
-  s.author           = { "Emad A." => "emad310@gmail.com" }
-  s.source           = { :git => "http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git", :tag => s.version.to_s }
-
-  s.platform     = :ios, '7.1'
-  s.requires_arc = true
-
+  s.homepage         = 'https://www.kikojas.com/about-cedarmaps'
+  s.authors           = { 'Emad A.' => 'emad310@gmail.com', 'Saeed T' => 'saeed.taheri@gmail.com' }
+  s.summary          = 'CedarMaps iOS SDK'
+  s.source           = { :git => 'http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git', :tag => s.version.to_s }
   s.source_files = 'Pod/Classes'
-  s.resource_bundles = {
-    'CedarMap' => ['Pod/Assets/*.png']
-  }
-
+  s.framework = 'UIKit'
+  s.platform     = :ios, '8.0'
+  s.requires_arc = true
+  s.resource_bundles = { 'CedarMap' => ['Pod/Assets/*.png' ] }
   s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'UIKit'
-  s.dependency 'Mapbox-iOS-SDK', '1.6.0'
+  s.dependency 'Mapbox-iOS-SDK', '~> 3.3.4'
 end
