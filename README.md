@@ -39,6 +39,8 @@ or initialise a ``MGLMapView`` with the url:
 
 In case you have got a credential error with ``nil`` as the result, there might be something wrong with your credentials at server side. So, before retrying and sending the request again request a new access token by calling method ``- (void)requestAccessTokenFromServer:(void (^)(NSString *token, NSError *error))completion;`` of ``CSAuthenticationManager`` class.
 
+Example projects for both ``Objective C`` and ``Swift`` are included.
+
 ## Requirements
 
 - Mapbox-iOS-SDK 

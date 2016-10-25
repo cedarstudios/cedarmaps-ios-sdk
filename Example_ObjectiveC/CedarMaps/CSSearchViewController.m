@@ -93,7 +93,7 @@
 {
     CSQueryParameters *params = [[CSQueryParameters alloc] init];
     [params addLocationWithCoordinate:self.mapView.centerCoordinate];
-    [params addDistance:1.0];
+    [params addDistance:10.0];
     
     [self.mapKit forwardGeocodingWithQueryString:query parameters:params completion:^(NSArray *results, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
