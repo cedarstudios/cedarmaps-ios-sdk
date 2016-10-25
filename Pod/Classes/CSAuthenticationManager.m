@@ -40,8 +40,9 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
         } else {
             completion(_accessToken);
         }
+    } else {
+        completion(_accessToken);
     }
-    
 }
 
 - (void)setCredentialsWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret

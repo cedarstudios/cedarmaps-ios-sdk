@@ -11,7 +11,7 @@
 
 @interface CSSearchViewController : UIViewController <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet RMMapView *mapView;
+@property (nonatomic, weak) IBOutlet MGLMapView *mapView;
 @property (nonatomic, weak) IBOutlet UIView *searchView;
 @property (nonatomic, weak) IBOutlet UIView *searchTextField;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *spinner;

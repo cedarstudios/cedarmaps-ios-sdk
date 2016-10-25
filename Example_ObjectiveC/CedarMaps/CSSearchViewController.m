@@ -11,9 +11,9 @@
 #pragma mark - CSSearchViewController Private Interface 
 #pragma mark
 
-@interface CSSearchViewController () <RMMapViewDelegate>
+@interface CSSearchViewController () <MGLMapViewDelegate>
 
-@property (nonatomic, strong) CSMapSource *mapSource;
+@property (nonatomic, strong) CSMapKit *mapKit;
 
 @end
 
@@ -34,17 +34,17 @@
     self.searchView.alpha = .95;
 
     // Initializing map source
-    self.mapSource = [[CSMapSource alloc] initWithMapId:@"cedarmaps.streets"];
+    self.mapKit = [[CSMapKit alloc] initWithMapID:@"cedarmaps.streets"];
 
-    // Setting map view properties
-    self.mapView.tileSource = self.mapSource;
-    self.mapView.hideAttribution = YES;
-    self.mapView.showLogoBug = NO;
-    self.mapView.zoom = 16;
+    [self.mapKit styleURLWithCompletion:^(NSURL *url) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.mapView.styleURL = url;
+        });
+    }];
+    
+    self.mapView.attributionButton.alpha = 0;
+    self.mapView.logoView.alpha = 0;
 
-    //[self.mapView removeAllCachedImages];
-
-    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(35.757552763570196, 51.41000747680664);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -75,62 +75,65 @@
     return NO;
 }
 
-#pragma mark - RMMapViewDelegate Methods
+#pragma mark - MGLMapViewDelegate Methods
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
-{
-    if (annotation.isUserLocationAnnotation) {
-        return nil;
-    }
+- (MGLAnnotationImage *)mapView:(MGLMapView *)mapView imageForAnnotation:(id<MGLAnnotation>)annotation {
+    
+    MGLAnnotationImage *image = [MGLAnnotationImage annotationImageWithImage:[UIImage imageNamed:@"star"] reuseIdentifier:@"marker"];
+    return image;
+}
 
-    RMMarker *marker = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"star"]];
-    marker.anchorPoint = CGPointMake(1, 1);
-    marker.canShowCallout = YES;
-
-    return marker;
+- (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
+    return YES;
 }
 
 #pragma mark - Private Methods
 
 - (void)searchWithQueryString:(NSString *)query
 {
-    CSQueryParameters *params = [CSQueryParameters new];
-    [params addLocationWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
-    [self.mapSource forwardGeocodingWithQueryString:query parameters:params completion:^(NSArray *results, NSError *error) {
-        [self.spinner stopAnimating];
-        
-        if (error != nil) {
-            [[[UIAlertView alloc] initWithTitle:@"بروز خطا"
-                                        message:error.localizedDescription
-                                       delegate:nil
-                              cancelButtonTitle:@"باشه"
-                              otherButtonTitles:nil] show];
-            return;
-        }
-
-        [self.mapView removeAllAnnotations];
-
-        for (NSDictionary *item in results) {
-            NSArray *center = [[item objectForKey:@"location"][@"center"] componentsSeparatedByString:@","];
-            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([center[0] doubleValue], [center[1] doubleValue]);
-            RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                                coordinate:coordinate
-                                                                  andTitle:[item objectForKey:@"name"]];
-            annotation.userInfo = @"search_result";
-            [self.mapView addAnnotation:annotation];
-        }
-
-        if (results.count > 0) {
-            RMAnnotation *firstAnnotation = [self.mapView.annotations objectAtIndex:0];
-            [self.mapView setCenterCoordinate:firstAnnotation.coordinate animated:YES];
-        }
-        else {
-            [[[UIAlertView alloc] initWithTitle:@"جستجو بدون نتیجه"
-                                       message:@"مکان مورد نظر پیدا نشد."
-                                      delegate:nil
-                             cancelButtonTitle:@"باشه"
-                              otherButtonTitles:nil] show];
-        }
+    CSQueryParameters *params = [[CSQueryParameters alloc] init];
+    [params addLocationWithCoordinate:self.mapView.centerCoordinate];
+    [params addDistance:1.0];
+    
+    [self.mapKit forwardGeocodingWithQueryString:query parameters:params completion:^(NSArray *results, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.spinner stopAnimating];
+            
+            if (error != nil) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"بروز خطا" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"باشه" style:UIAlertActionStyleCancel handler:NULL]];
+                
+                [self presentViewController:alert animated:YES completion:NULL];
+                
+                return;
+            }
+            
+            if (self.mapView.annotations && self.mapView.annotations.count > 0) {
+                [self.mapView removeAnnotations:self.mapView.annotations];
+            }
+            
+            for (NSDictionary *item in results) {
+                NSArray *center = [[item objectForKey:@"location"][@"center"] componentsSeparatedByString:@","];
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([center[0] doubleValue], [center[1] doubleValue]);
+                
+                MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+                annotation.coordinate = coordinate;
+                annotation.title = [item objectForKey:@"name"];
+                
+                [self.mapView addAnnotation:annotation];
+            }
+            
+            if (results.count > 0) {
+                MGLPointAnnotation *firstAnnotation = self.mapView.annotations.firstObject;
+                [self.mapView setCenterCoordinate:firstAnnotation.coordinate animated:YES];
+            }
+            else {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"جستجو بدون نتیجه" message:@"مکان مورد نظر پیدا نشد." preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"باشه" style:UIAlertActionStyleCancel handler:NULL]];
+                
+                [self presentViewController:alert animated:YES completion:NULL];
+            }
+        });
     }];
 }
 

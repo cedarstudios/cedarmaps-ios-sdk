@@ -11,6 +11,6 @@
 
 @interface CSBookmarksViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet RMMapView *mapView;
+@property (nonatomic, weak) IBOutlet MGLMapView *mapView;
 
 @end

@@ -67,7 +67,7 @@
                              completion:(void (^)(NSArray *results, NSError *error))completion
 {
 
-    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@.json", [[CSAuthenticationManager sharedManager] baseURL], self.mapID, query];
+    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@", [[CSAuthenticationManager sharedManager] baseURL], self.mapID, query];
     if (parameters != nil) {
         [URLString appendString:@"?"];
         [parameters.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

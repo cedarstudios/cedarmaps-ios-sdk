@@ -9,9 +9,8 @@
 #import "CSBookmarksViewController.h"
 
 #pragma mark - CSViewController Private Interface
-#pragma maek
 
-@interface CSBookmarksViewController () <RMMapViewDelegate>
+@interface CSBookmarksViewController () <MGLMapViewDelegate>
 
 @end
 
@@ -25,32 +24,32 @@
     [super viewDidLoad];
 
     CSAuthenticationManager *auth = [CSAuthenticationManager sharedManager];
-    [auth setCredentialsWithClientId:@"user"
-                        clientSecret:@"pass"];
+    [auth setCredentialsWithClientID:@"kikojas-7086923255815987087"
+                        clientSecret:@"fV0vEWtpa29qYXPmgHyid2wIh4_hzJjA0WmOsUlgODl3J45aNp0KZwi3sQ=="];
 
-    CSMapSource *source = [[CSMapSource alloc] initWithMapId:@"cedarmaps.streets"];
-
-    self.mapView.tileSource = source;
-    self.mapView.hideAttribution = YES;
-    self.mapView.showLogoBug = NO;
-    self.mapView.zoom = 16;
-
-    [self.mapView removeAllCachedImages];
+    CSMapKit *mapKit = [[CSMapKit alloc] initWithMapID:@"cedarmaps.streets"];
+    
+    [mapKit styleURLWithCompletion:^(NSURL *url) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.mapView.styleURL = url;
+        });
+    }];
+    
+    self.mapView.attributionButton.alpha = 0;
+    self.mapView.logoView.alpha = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    /*
+    
     [self markBusStation];
     [self markTrainStation];
     [self markPointNumberOne];
     [self markPointNumberTwo];
     [self markPointNumberThree];
-     */
     
-    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214);
 }
 
 #pragma mark
@@ -60,65 +59,62 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://cedarmaps.com"]];
 }
 
-#pragma mark - RMMapViewDelegate Methods
+#pragma mark - MGLMapViewDelegate Methods
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
-{
-    if (annotation.isUserLocationAnnotation) {
-        return nil;
-    }
-
-    RMMarker *marker = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:annotation.userInfo]];
-    marker.anchorPoint = CGPointMake(1, 1);
-    marker.canShowCallout = YES;
-
-    return marker;
+- (MGLAnnotationImage *)mapView:(MGLMapView *)mapView imageForAnnotation:(id<MGLAnnotation>)annotation {
+    MGLAnnotationImage *image = [MGLAnnotationImage annotationImageWithImage:[UIImage imageNamed:annotation.subtitle] reuseIdentifier:annotation.subtitle];
+    return image;
 }
+
+- (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
+    return YES;
+}
+
 
 #pragma mark -
 
 - (void)markBusStation
 {
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                        coordinate:CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214)
-                                                          andTitle:@"ایستگاه اتوبوس"];
-    annotation.userInfo = @"bus_station";
+    MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214);
+    annotation.title = @"ایستگاه اتوبوس";
+    annotation.subtitle = @"bus_station";
     [self.mapView addAnnotation:annotation];
 }
 
 - (void)markTrainStation
 {
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                        coordinate:CLLocationCoordinate2DMake(35.772857173873305, 51.437859535217285)
-                                                          andTitle:@"مترو"];
-    annotation.userInfo = @"train_station";
+    MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(35.772857173873305, 51.437859535217285);
+    annotation.title = @"مترو";
+    annotation.subtitle = @"train_station";
     [self.mapView addAnnotation:annotation];
 }
 
 - (void)markPointNumberOne
 {
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                        coordinate:CLLocationCoordinate2DMake(35.77633899479261, 51.4344048500061)
-                                                          andTitle:@"نقطه اول"];
-    annotation.userInfo = @"point_one";
+    MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(35.77633899479261, 51.4344048500061);
+    annotation.title = @"نقطه اول";
+    annotation.subtitle = @"point_one";
     [self.mapView addAnnotation:annotation];
 }
 
 - (void)markPointNumberTwo
 {
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                        coordinate:CLLocationCoordinate2DMake(35.77943768718256, 51.437666416168206)
-                                                          andTitle:@"نقطه دوم"];
-    annotation.userInfo = @"point_two";
+    MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(35.77943768718256, 51.437666416168206);
+    annotation.title = @"نقطه دوم";
+    annotation.subtitle = @"point_two";
     [self.mapView addAnnotation:annotation];
 }
 
 - (void)markPointNumberThree
 {
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView
-                                                        coordinate:CLLocationCoordinate2DMake(35.77773168047123, 51.44279479980469)
-                                                          andTitle:@"نقطه سوم"];
-    annotation.userInfo = @"point_three";
+    MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(35.77773168047123, 51.44279479980469);
+    annotation.title = @"نقطه سوم";
+    annotation.subtitle = @"point_three";
     [self.mapView addAnnotation:annotation];
 }
 
