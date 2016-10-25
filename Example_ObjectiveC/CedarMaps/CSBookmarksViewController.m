@@ -24,8 +24,8 @@
     [super viewDidLoad];
 
     CSAuthenticationManager *auth = [CSAuthenticationManager sharedManager];
-    [auth setCredentialsWithClientID:@"kikojas-7086923255815987087"
-                        clientSecret:@"fV0vEWtpa29qYXPmgHyid2wIh4_hzJjA0WmOsUlgODl3J45aNp0KZwi3sQ=="];
+    [auth setCredentialsWithClientID:@"clientID"
+                        clientSecret:@"clientSecret"];
 
     CSMapKit *mapKit = [[CSMapKit alloc] initWithMapID:@"cedarmaps.streets"];
     

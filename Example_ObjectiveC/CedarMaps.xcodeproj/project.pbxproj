@@ -317,7 +317,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CedarMaps/CedarMaps-Prefix.pch";
 				INFOPLIST_FILE = "CedarMaps/CedarMaps-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cedarmaps.example.ObjC;
 				PRODUCT_NAME = CedarMaps;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -334,7 +334,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CedarMaps/CedarMaps-Prefix.pch";
 				INFOPLIST_FILE = "CedarMaps/CedarMaps-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cedarmaps.example.ObjC;
 				PRODUCT_NAME = CedarMaps;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
