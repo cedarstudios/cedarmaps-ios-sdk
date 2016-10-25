@@ -11,9 +11,9 @@
 static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
 static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
 
-@interface CSAuthenticationManager () {
-    NSString *_accessToken;
-}
+@interface CSAuthenticationManager ()
+
+@property (nonatomic, strong) NSString *accessToken;
 
 @end
 
@@ -29,35 +29,37 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
     return self;
 }
 
-- (NSString *)accessToken
-{
-    if (_accessToken == nil) {
+- (void)savedAccessToken:(void (^) (NSString *token))completion {
+    if (!_accessToken) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         _accessToken = [defaults objectForKey:kCurrentAccessToken];
-
-        if (_accessToken == nil) {
-            [self requestAccessToken:nil];
+        if (!_accessToken) {
+            [self requestAccessTokenFromServer:^(NSString *token, NSError *error) {
+                completion(token);
+            }];
+        } else {
+            completion(_accessToken);
         }
+    } else {
+        completion(_accessToken);
     }
-
-    return _accessToken;
 }
 
-- (void)setCredentialsWithClientId:(NSString *)clientId clientSecret:(NSString *)clientSecret
+- (void)setCredentialsWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret
 {
-    NSAssert(clientId     != nil && clientId.length     > 0, @"Given Client ID is not in acceptable format.");
+    NSAssert(clientID != nil && clientID.length > 0, @"Given Client ID is not in acceptable format.");
     NSAssert(clientSecret != nil && clientSecret.length > 0, @"Given Client Secret is not in acceptable format.");
 
-    _clientId = clientId;
+    _clientID = clientID;
     _clientSecret = clientSecret;
 }
 
-- (void)requestAccessToken:(NSError *__autoreleasing *)error
+- (void)requestAccessTokenFromServer:(void (^)(NSString *token, NSError *error))completion
 {
-    NSAssert(self.clientId      != nil, @"No client id specified. Set your given credentials before trying to get an access token.");
-    NSAssert(self.clientSecret  != nil, @"No client Secret specified. Set your given credentials before trying to get an access token.");
+    NSAssert(self.clientID != nil, @"No client id specified. Set your given credentials before trying to get an access token.");
+    NSAssert(self.clientSecret != nil, @"No client Secret specified. Set your given credentials before trying to get an access token.");
 
-    NSString *params = [NSString stringWithFormat:@"client_id=%@&client_secret=%@", self.clientId, self.clientSecret];
+    NSString *params = [NSString stringWithFormat:@"client_id=%@&client_secret=%@", self.clientID, self.clientSecret];
     params = [params stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     NSURL *tokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/token", self.baseURL]];
@@ -65,27 +67,34 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
     [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPMethod:@"POST"];
 
-    NSError *responseError = nil;
-    NSHTTPURLResponse *response = nil;
-    NSData *token = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&responseError];
-
-    if (response.statusCode == 200) {
-        NSError *serializationError = nil;
-        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:token options:0 error:&serializationError];
-        if (serializationError != nil && error != nil) {
-            *error = serializationError;
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable token, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
+        
+        if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+            if (statusCode == 200) {
+                NSError *serializationError;
+                NSDictionary *result = [NSJSONSerialization JSONObjectWithData:token options:0 error:&serializationError];
+                if (serializationError != nil) {
+                    completion(nil, serializationError);
+                    return;
+                }
+                
+                _accessToken = result[@"access_token"];
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:_accessToken forKey:kCurrentAccessToken];
+                
+                completion(_accessToken, nil);
+                return;
+            } else if (responseError != nil) {
+                completion(nil, responseError);
+                return;
+            }
+        } else if (responseError != nil) {
+            completion(nil, responseError);
             return;
         }
-
-        _accessToken = result[@"access_token"];
-
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:_accessToken forKey:kCurrentAccessToken];
-        [defaults synchronize];
-    }
-    else if (responseError != nil && error != nil) {
-        *error = responseError;
-    }
+    }] resume];
 }
 
 - (void)invalidateCredential
