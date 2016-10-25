@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'CedarMaps' do
-    pod 'CedarMaps'
+    pod 'CedarMaps', :git => 'git@gitlab.cedar.ir:cedar.studios/cedarmaps-sdk-ios.git'
 end
