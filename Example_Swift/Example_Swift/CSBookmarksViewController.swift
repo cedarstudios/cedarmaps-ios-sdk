@@ -17,7 +17,7 @@ class CSBookmarksViewController: UIViewController {
         super.viewDidLoad()
 
         let auth = CSAuthenticationManager.shared()
-        auth?.setCredentialsWithClientID("kikojas-7086923255815987087", clientSecret: "fV0vEWtpa29qYXPmgHyid2wIh4_hzJjA0WmOsUlgODl3J45aNp0KZwi3sQ==")
+        auth?.setCredentialsWithClientID("clientID", clientSecret: "clientSecret")
         
         let mapKit = CSMapKit(mapID: "cedarmaps.streets")
         mapKit?.styleURL(completion: { (url) in
