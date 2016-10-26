@@ -15,6 +15,13 @@
 #define TOKEN_NOT_PROVIDED_CODE -68
 #define INVALID_CREDINTIAL @"Invalid credential"
 
+CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocationCoordinate2D destination) {
+    CoordinatesTuple tuple;
+    tuple.departure = departure;
+    tuple.destination = destination;
+    return tuple;
+}
+
 #pragma mark - CSQueryParameters Private Interface
 
 @interface CSQueryParameters ()
@@ -47,7 +54,7 @@
 #pragma mark StyleURL
 
 - (void)styleURLWithCompletion:(void (^) (NSURL *url))completion {
-
+    
     [[CSAuthenticationManager sharedManager] savedAccessToken:^(NSString *token) {
         NSString *tileJSONURLString = [NSString stringWithFormat:@"%@/styles/%@.json", [[CSAuthenticationManager sharedManager] baseURL] , self.mapID];
         if (token && token.length > 0) {
@@ -60,24 +67,25 @@
     }];
 }
 
-#pragma mark Geocoding
+#pragma mark Distance
 
-- (void)forwardGeocodingWithQueryString:(NSString *)query
-                             parameters:(CSQueryParameters *)parameters
-                             completion:(void (^)(NSArray *results, NSError *error))completion
-{
-
-    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@", [[CSAuthenticationManager sharedManager] baseURL], self.mapID, query];
-    if (parameters != nil) {
-        [URLString appendString:@"?"];
-        [parameters.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            if (key > 0) {
-                [URLString appendString:@"&"];
-            }
-            [URLString appendFormat:@"%@=%@", key, obj];
-        }];
+- (void)distanceWithCompletionHandler:(void (^) (NSArray *results, NSError *error))completion betweenPoints:(CoordinatesTuple)firstArg, ... {
+    
+    NSMutableString *arguments = [NSMutableString string];
+    
+    va_list args;
+    va_start(args, firstArg);
+    for (CoordinatesTuple arg = firstArg; CLLocationCoordinate2DIsValid(arg.departure) && CLLocationCoordinate2DIsValid(arg.destination) ; arg = va_arg(args, CoordinatesTuple))
+    {
+        [arguments appendString:[NSString stringWithFormat:@"%f,%f;%f,%f/", arg.departure.latitude, arg.departure.longitude, arg.destination.latitude, arg.destination.longitude]];
     }
-
+    va_end(args);
+    
+    if ([[arguments substringFromIndex:arguments.length-1] isEqualToString:@"/"]) {
+        arguments = [arguments substringToIndex:arguments.length - 1];
+    }
+    
+    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/distance/cedarmaps.driving/%@", [[CSAuthenticationManager sharedManager] baseURL], arguments];
     NSURL *URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     
@@ -88,7 +96,69 @@
             [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 
                 if ([(NSHTTPURLResponse *)response statusCode] == HTTP_401_NOT_AUTHORIZED) {
+                    
+                    NSString *description = NSLocalizedString(INVALID_CREDINTIAL, @"");
+                    NSError *responseError = [NSError errorWithDomain:NSCocoaErrorDomain code:kCFURLErrorUserCancelledAuthentication userInfo:@{NSLocalizedDescriptionKey: description}];
+                    
+                    completion(nil, responseError);
+                } else {
+                    if (error != nil) {
+                        completion(nil, error);
+                    } else {
+                        NSError *serializationError;
+                        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
+                        if (serializationError == nil) {
+                            NSArray *output = [NSArray array];
+                            if ([json.allKeys containsObject:@"result"]) {
+                                NSArray *results = [[json objectForKey:@"result"] objectForKey:@"routes"];
+                                output = results;
+                            }
+                            completion(output, nil);
+                        }
+                        else {
+                            completion(nil, serializationError);
+                        }
+                    }
+                }
+            }] resume];
+        } else {
+            NSString *description = NSLocalizedString(TOKEN_NOT_PROVIDED, @"");
+            NSError *error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:TOKEN_NOT_PROVIDED_CODE userInfo:@{NSLocalizedDescriptionKey: description}];
+            completion(nil, error);
+        }
+    }];
+    
+}
 
+#pragma mark Geocoding
+
+- (void)forwardGeocodingWithQueryString:(NSString *)query
+                             parameters:(CSQueryParameters *)parameters
+                             completion:(void (^)(NSArray *results, NSError *error))completion
+{
+    
+    NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@", [[CSAuthenticationManager sharedManager] baseURL], self.mapID, query];
+    if (parameters != nil) {
+        [URLString appendString:@"?"];
+        [parameters.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            if (key > 0) {
+                [URLString appendString:@"&"];
+            }
+            [URLString appendFormat:@"%@=%@", key, obj];
+        }];
+    }
+    
+    NSURL *URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    
+    [[CSAuthenticationManager sharedManager] savedAccessToken:^(NSString *token) {
+        if (token) {
+            [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+            
+            [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                
+                if ([(NSHTTPURLResponse *)response statusCode] == HTTP_401_NOT_AUTHORIZED) {
+                    
                     NSString *description = NSLocalizedString(INVALID_CREDINTIAL, @"");
                     NSError *responseError = [NSError errorWithDomain:NSCocoaErrorDomain code:kCFURLErrorUserCancelledAuthentication userInfo:@{NSLocalizedDescriptionKey: description}];
                     
@@ -127,7 +197,7 @@
 {
     NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/geocode/%@/%@,%@.json",
                                   [[CSAuthenticationManager sharedManager] baseURL], self.mapID, @(coordinate.latitude), @(coordinate.longitude)];
-
+    
     NSURL *URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     
@@ -182,7 +252,7 @@
     if (self != nil) {
         self.params = [NSMutableDictionary dictionary];
     }
-
+    
     return self;
 }
 
