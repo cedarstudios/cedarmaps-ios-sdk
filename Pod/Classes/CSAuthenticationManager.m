@@ -8,7 +8,7 @@
 
 #import "CSAuthenticationManager.h"
 
-static NSString * const kBaseURL = @"http://api.cedarmaps.com/v1";
+static NSString * const kBaseURL = @"https://api.cedarmaps.com/v1";
 static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
 
 @interface CSAuthenticationManager ()
