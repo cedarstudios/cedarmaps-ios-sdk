@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint CedarMap.podspec' to ensure this is a
+# Be sure to run `pod lib lint CedarMaps.podspec' to ensure this is a
 # valid spec and remove all comments before submitting the spec.
 #
 # Any lines starting with a # are optional, but encouraged
@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.cocoapods_version = '>= 0.36'
   s.license          = 'MIT'
   s.homepage         = 'https://www.kikojas.com/about-cedarmaps'
