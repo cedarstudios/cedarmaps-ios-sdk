@@ -15,18 +15,19 @@
 #define TOKEN_NOT_PROVIDED_CODE -68
 #define INVALID_CREDINTIAL @"Invalid credential"
 
-CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocationCoordinate2D destination) {
-    CoordinatesTuple tuple;
-    tuple.departure = departure;
-    tuple.destination = destination;
-    return tuple;
-}
-
 #pragma mark - CSQueryParameters Private Interface
 
 @interface CSQueryParameters ()
 
 @property (nonatomic, strong) NSMutableDictionary *params;
+
+@end
+
+#pragma mark - CSDistancePoints Private Interface
+
+@interface CSDistancePoints ()
+
+@property (nonatomic, strong) NSMutableString *pointsDesc;
 
 @end
 
@@ -69,20 +70,11 @@ CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocati
 
 #pragma mark Distance
 
-- (void)distanceWithCompletionHandler:(void (^) (NSArray *results, NSError *error))completion betweenPoints:(CoordinatesTuple)firstArg, ... {
+- (void)distanceBetweenPoints:(CSDistancePoints *)points withCompletion:(void (^) (NSArray *results, NSError *error))completion {
     
-    NSMutableString *arguments = [NSMutableString string];
-    
-    va_list args;
-    va_start(args, firstArg);
-    for (CoordinatesTuple arg = firstArg; CLLocationCoordinate2DIsValid(arg.departure) && CLLocationCoordinate2DIsValid(arg.destination) ; arg = va_arg(args, CoordinatesTuple))
-    {
-        [arguments appendString:[NSString stringWithFormat:@"%f,%f;%f,%f/", arg.departure.latitude, arg.departure.longitude, arg.destination.latitude, arg.destination.longitude]];
-    }
-    va_end(args);
-    
-    if ([[arguments substringFromIndex:arguments.length-1] isEqualToString:@"/"]) {
-        arguments = [arguments substringToIndex:arguments.length - 1];
+    NSString *arguments = @"";
+    if (points.pointsDesc.length > 0 && [[points.pointsDesc substringFromIndex:points.pointsDesc.length-1] isEqualToString:@"/"]) {
+        arguments = [points.pointsDesc substringToIndex:points.pointsDesc.length - 1];
     }
     
     NSMutableString *URLString = [NSMutableString stringWithFormat:@"%@/distance/cedarmaps.driving/%@", [[CSAuthenticationManager sharedManager] baseURL], arguments];
@@ -274,6 +266,27 @@ CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocati
 - (void)addLocationWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
     [self.params setObject:[NSString stringWithFormat:@"%@,%@", @(coordinate.latitude), @(coordinate.longitude)] forKey:@"location"];
+}
+
+@end
+
+#pragma mark
+
+@implementation CSDistancePoints
+
+- (id)init
+{
+    self = [super init];
+    if (self != nil) {
+        self.pointsDesc = [NSMutableString string];
+    }
+    
+    return self;
+}
+
+- (void)addCoordinatePairWithDeparture:(CLLocationCoordinate2D)departure destination:(CLLocationCoordinate2D)destination {
+    
+    [self.pointsDesc appendString:[NSString stringWithFormat:@"%f,%f;%f,%f/", departure.latitude, departure.longitude, destination.latitude, destination.longitude]];
 }
 
 @end

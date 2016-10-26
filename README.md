@@ -37,13 +37,13 @@ or initialise a ``MGLMapView`` with the url:
 	- (void)forwardGeocodingWithQueryString:(NSString *)query parameters:(CSQueryParameters *)parameters completion:(void (^)(NSArray *results, NSError *error))completion;
 	- (void)reverseGeocodingWithCoordinate:(CLLocationCoordinate2D)coordinate completion:(void (^)(NSDictionary *result, NSError *error))completion;
 
-``CSMapKit`` has a method for getting distance between one pair or multiple pairs of points. It gets the points via variadic arguments in ``CoordinatesTuple`` struct. An instance of this struct can be made using this function:
+``CSMapKit`` has a method for getting distance between one pair or multiple pairs of points. First you create an instance of ``CSDistancePoints`` and use the following function to add points:
 
-	CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocationCoordinate2D destination);
+	- (void)addCoordinatePairWithDeparture:(CLLocationCoordinate2D)departure destination:(CLLocationCoordinate2D)destination;
 
-After creating this, you could pass one or multiple instances of ``CoordinatesTuple`` to the following method:
+This can be called multiple times. Then you can call the following method to get the distance info in an ``NSArray``:
 
-	- (void)distanceWithCompletionHandler:(void (^) (NSArray *results, NSError *error))completion betweenPoints:(CoordinatesTuple)firstArg, ...;
+	- (void)distanceBetweenPoints:(CSDistancePoints *)points withCompletion:(void (^) (NSArray *results, NSError *error))completion;
 
 The results would be available once the request finishes loading in an array in the completion handler.
 

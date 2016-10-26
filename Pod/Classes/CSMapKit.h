@@ -8,34 +8,8 @@
 
 @import CoreLocation;
 
-/*
- *  CoordinatesTuple
- *
- *  Discussion:
- *    A structure that contains two geographical coordinates.
- *
- *  Fields:
- *    departure:
- *      The departure in CLLocationCoordinate2D.
- *    destination:
- *      The destination in CLLocationCoordinate2D.
- */
-struct CoordinatesTuple {
-    CLLocationCoordinate2D departure;
-    CLLocationCoordinate2D destination;
-};
-typedef struct CoordinatesTuple CoordinatesTuple;
-
-/*
- *  CoordinatesTupleMake:
- *
- *  Discussion:
- *    Returns a new CoordinatesTuple at the given departure and destination
- */
-CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocationCoordinate2D destination);
-
-
 @class CSQueryParameters;
+@class CSDistancePoints;
 
 /* A CSMapKit is used to display map tiles from a network-based map hosted on CedarMaps as well as getting geocoding data from server.
  * Maps should be referenced by their map ID.
@@ -48,7 +22,7 @@ CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocati
 - (instancetype)initWithMapID:(NSString *)mapID;
 - (void)styleURLWithCompletion:(void (^) (NSURL *url))completion;
 
-- (void)distanceWithCompletionHandler:(void (^) (NSArray *results, NSError *error))completion betweenPoints:(CoordinatesTuple)firstArg, ...;
+- (void)distanceBetweenPoints:(CSDistancePoints *)points withCompletion:(void (^) (NSArray *results, NSError *error))completion;
 - (void)forwardGeocodingWithQueryString:(NSString *)query
                              parameters:(CSQueryParameters *)parameters
                              completion:(void (^)(NSArray *results, NSError *error))completion;
@@ -65,5 +39,13 @@ CoordinatesTuple CoordinatesTupleMake(CLLocationCoordinate2D departure, CLLocati
 - (void)addLimit:(NSUInteger)limit;
 - (void)addDistance:(CLLocationDistance)distance;
 - (void)addLocationWithCoordinate:(CLLocationCoordinate2D)coordinate;
+
+@end
+
+#pragma mark
+
+@interface CSDistancePoints: NSObject
+
+- (void)addCoordinatePairWithDeparture:(CLLocationCoordinate2D)departure destination:(CLLocationCoordinate2D)destination;
 
 @end
