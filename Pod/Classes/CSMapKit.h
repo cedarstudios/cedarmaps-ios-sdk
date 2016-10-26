@@ -9,6 +9,7 @@
 @import CoreLocation;
 
 @class CSQueryParameters;
+@class CSDistancePoints;
 
 /* A CSMapKit is used to display map tiles from a network-based map hosted on CedarMaps as well as getting geocoding data from server.
  * Maps should be referenced by their map ID.
@@ -20,6 +21,8 @@
 
 - (instancetype)initWithMapID:(NSString *)mapID;
 - (void)styleURLWithCompletion:(void (^) (NSURL *url))completion;
+
+- (void)distanceBetweenPoints:(CSDistancePoints *)points withCompletion:(void (^) (NSArray *results, NSError *error))completion;
 - (void)forwardGeocodingWithQueryString:(NSString *)query
                              parameters:(CSQueryParameters *)parameters
                              completion:(void (^)(NSArray *results, NSError *error))completion;
@@ -36,5 +39,13 @@
 - (void)addLimit:(NSUInteger)limit;
 - (void)addDistance:(CLLocationDistance)distance;
 - (void)addLocationWithCoordinate:(CLLocationCoordinate2D)coordinate;
+
+@end
+
+#pragma mark
+
+@interface CSDistancePoints: NSObject
+
+- (void)addCoordinatePairWithDeparture:(CLLocationCoordinate2D)departure destination:(CLLocationCoordinate2D)destination;
 
 @end

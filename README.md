@@ -1,4 +1,4 @@
-# CedarMap
+# CedarMaps
 
 ## Usage
 
@@ -37,9 +37,19 @@ or initialise a ``MGLMapView`` with the url:
 	- (void)forwardGeocodingWithQueryString:(NSString *)query parameters:(CSQueryParameters *)parameters completion:(void (^)(NSArray *results, NSError *error))completion;
 	- (void)reverseGeocodingWithCoordinate:(CLLocationCoordinate2D)coordinate completion:(void (^)(NSDictionary *result, NSError *error))completion;
 
+``CSMapKit`` has a method for getting distance between one pair or multiple pairs of points. First you create an instance of ``CSDistancePoints`` and use the following function to add points:
+
+	- (void)addCoordinatePairWithDeparture:(CLLocationCoordinate2D)departure destination:(CLLocationCoordinate2D)destination;
+
+This can be called multiple times. Then you can call the following method to get the distance info in an ``NSArray``:
+
+	- (void)distanceBetweenPoints:(CSDistancePoints *)points withCompletion:(void (^) (NSArray *results, NSError *error))completion;
+
+The results would be available once the request finishes loading in an array in the completion handler.
+
 In case you have got a credential error with ``nil`` as the result, there might be something wrong with your credentials at server side. So, before retrying and sending the request again request a new access token by calling method ``- (void)requestAccessTokenFromServer:(void (^)(NSString *token, NSError *error))completion;`` of ``CSAuthenticationManager`` class.
 
-Example projects for both ``Objective C`` and ``Swift`` are included.
+Example projects for both ``Objective-C`` and ``Swift`` are included.
 
 ## Requirements
 
