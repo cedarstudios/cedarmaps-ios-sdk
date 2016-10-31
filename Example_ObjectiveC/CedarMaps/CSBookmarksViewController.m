@@ -12,6 +12,8 @@
 
 @interface CSBookmarksViewController () <MGLMapViewDelegate>
 
+@property (nonatomic, strong) CSMapKit *mapKit;
+
 @end
 
 #pragma mark - CSViewController Implementation
@@ -24,12 +26,12 @@
     [super viewDidLoad];
 
     CSAuthenticationManager *auth = [CSAuthenticationManager sharedManager];
-    [auth setCredentialsWithClientID:@"clientID"
-                        clientSecret:@"clientSecret"];
+    [auth setCredentialsWithClientID:nil
+                        clientSecret:nil];
 
-    CSMapKit *mapKit = [[CSMapKit alloc] initWithMapID:@"cedarmaps.streets"];
+    self.mapKit = [[CSMapKit alloc] initWithMapID:@"cedarmaps.streets"];
     
-    [mapKit styleURLWithCompletion:^(NSURL *url) {
+    [self.mapKit styleURLWithCompletion:^(NSURL *url) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.mapView.styleURL = url;
         });
@@ -43,13 +45,28 @@
 {
     [super viewDidAppear:animated];
 
+//    [self markBusStation];
+//    [self markTrainStation];
+//    [self markPointNumberOne];
+//    [self markPointNumberTwo];
+//    [self markPointNumberThree];
     
-    [self markBusStation];
-    [self markTrainStation];
-    [self markPointNumberOne];
-    [self markPointNumberTwo];
-    [self markPointNumberThree];
-    
+    [self.mapKit reverseGeocodingWithCoordinate:CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214) completion:^(NSDictionary *result, NSError *error) {
+        
+        NSString *city = result[@"city"];
+        NSString *locality = result[@"locality"];
+        NSString *address = result[@"address"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            MGLPointAnnotation *point = [[MGLPointAnnotation alloc] init];
+            point.coordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214);
+            point.title = [NSString stringWithFormat:@"%@، %@، %@", city, locality, address];
+            point.subtitle = nil;
+            
+            [self.mapView addAnnotation:point];
+        });
+    }];
 }
 
 #pragma mark
@@ -62,6 +79,9 @@
 #pragma mark - MGLMapViewDelegate Methods
 
 - (MGLAnnotationImage *)mapView:(MGLMapView *)mapView imageForAnnotation:(id<MGLAnnotation>)annotation {
+    if (!annotation.subtitle) {
+        return nil;
+    }
     MGLAnnotationImage *image = [MGLAnnotationImage annotationImageWithImage:[UIImage imageNamed:annotation.subtitle] reuseIdentifier:annotation.subtitle];
     return image;
 }

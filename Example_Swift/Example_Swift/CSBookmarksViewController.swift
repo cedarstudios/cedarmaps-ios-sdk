@@ -12,14 +12,14 @@ import CedarMaps
 class CSBookmarksViewController: UIViewController {
 
     @IBOutlet weak var mapView: MGLMapView!
+    let mapKit = CSMapKit(mapID: "cedarmaps.streets")
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let auth = CSAuthenticationManager.shared()
-        auth?.setCredentialsWithClientID("clientID", clientSecret: "clientSecret")
+        auth?.setCredentialsWithClientID(nil, clientSecret: nil)
         
-        let mapKit = CSMapKit(mapID: "cedarmaps.streets")
         mapKit?.styleURL(completion: { (url) in
             DispatchQueue.main.async {
                 self.mapView.styleURL = url
@@ -33,11 +33,28 @@ class CSBookmarksViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        markBusStation()
-        markTrainStation()
-        markPointNumberOne()
-        markPointNumberTwo()
-        markPointNumberThree()
+//        markBusStation()
+//        markTrainStation()
+//        markPointNumberOne()
+//        markPointNumberTwo()
+//        markPointNumberThree()
+        
+        
+        mapKit?.reverseGeocoding(with: CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214), completion: { (result, error) in
+            let city = result?["city"] as? String
+            let locality = result?["locality"] as? String
+            let address = result?["address"] as? String
+            
+            DispatchQueue.main.async {
+                
+                let point = MGLPointAnnotation()
+                point.coordinate = CLLocationCoordinate2DMake(35.770889877650724, 51.439468860626214)
+                point.title = "\(city ?? "شهر یافت نشد")، \(locality ?? "محله یافت نشد")، \(address ?? "آدرس یافت نشد")"
+                point.subtitle = nil
+                
+                self.mapView.addAnnotation(point)
+            }
+        })
     }
 
     @IBAction func attributionDidTouchUpInside(_ sender: UIButton?) {
@@ -49,13 +66,15 @@ class CSBookmarksViewController: UIViewController {
 extension CSBookmarksViewController: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        let image = MGLAnnotationImage(image: UIImage(named: annotation.subtitle!!)!, reuseIdentifier: annotation.subtitle!!)
+        guard let s1 = annotation.subtitle, let s2 = s1 else { return nil }
+        let image = MGLAnnotationImage(image: UIImage(named: s2)!, reuseIdentifier: annotation.subtitle!!)
         return image
     }
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return true
     }
+    
     
     fileprivate func markBusStation() {
         let annotation = MGLPointAnnotation()
