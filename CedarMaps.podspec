@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.cocoapods_version = '>= 0.36'
   s.license          = 'MIT'
   s.homepage         = 'https://www.kikojas.com/about-cedarmaps'

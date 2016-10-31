@@ -215,7 +215,9 @@
                             NSDictionary *output = [NSDictionary dictionary];
                             if ([json.allKeys containsObject:@"result"]) {
                                 NSDictionary *result = [json objectForKey:@"result"];
-                                output = result;
+                                completion(result, nil);
+                            } else {
+                                completion(output, nil);
                             }
                         }
                         else {
