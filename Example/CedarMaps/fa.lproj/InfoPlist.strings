@@ -1,0 +1,4 @@
+/* Localized versions of Info.plist keys */
+
+"NSLocationWhenInUseUsageDescription" = "سیدارمپ برای نمایش موقعیت شما روی نقشه از شما اجازه می‌خواهد";
+"CFBundleDisplayName" = "سیدارمپ دمو";

@@ -1,0 +1,7 @@
+platform :ios, '11.0'
+use_frameworks!
+
+target 'CedarMaps_Example' do
+  pod 'CedarMaps', :path => '../'
+
+end

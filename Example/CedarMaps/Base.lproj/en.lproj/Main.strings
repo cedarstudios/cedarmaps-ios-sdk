@@ -1,0 +1,63 @@
+
+/* Class = "UITabBarItem"; title = "Reverse Geocode"; ObjectID = "2cy-Oc-jdY"; */
+"2cy-Oc-jdY.title" = "Reverse Geocode";
+
+/* Class = "UIButton"; normalTitle = "Create Snapshot"; ObjectID = "3eM-lp-ybO"; */
+"3eM-lp-ybO.normalTitle" = "Create Snapshot";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5dd-fE-gjh"; */
+"5dd-fE-gjh.text" = "Label";
+
+/* Class = "UILabel"; text = "Tap on the map to choose Departure and Destination points"; ObjectID = "6Rq-z4-inE"; */
+"6Rq-z4-inE.text" = "Tap on the map to choose Departure and Destination points";
+
+/* Class = "UITextField"; text = "35.7454"; ObjectID = "7Kd-VU-rTF"; */
+"7Kd-VU-rTF.text" = "35.7454";
+
+/* Class = "UITabBarItem"; title = "Directions"; ObjectID = "Eni-Nt-rLL"; */
+"Eni-Nt-rLL.title" = "Directions";
+
+/* Class = "UITabBarItem"; title = "Map"; ObjectID = "FaA-0j-SaR"; */
+"FaA-0j-SaR.title" = "Map";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Knc-SY-RVC"; */
+"Knc-SY-RVC.text" = "Label";
+
+/* Class = "UILabel"; text = "Zoom Level"; ObjectID = "Lra-Fx-K0F"; */
+"Lra-Fx-K0F.text" = "Zoom Level";
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "M4J-v4-I5V"; */
+"M4J-v4-I5V.title" = "Search";
+
+/* Class = "UITextField"; text = "51.3572"; ObjectID = "PuK-NC-TRb"; */
+"PuK-NC-TRb.text" = "51.3572";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "X4G-5I-PLA"; */
+"X4G-5I-PLA.text" = "Label";
+
+/* Class = "UILabel"; text = "Longitude for Center Point"; ObjectID = "cKo-k8-k6G"; */
+"cKo-k8-k6G.text" = "Longitude for Center Point";
+
+/* Class = "UILabel"; text = "Distance: "; ObjectID = "dgd-97-9ef"; */
+"dgd-97-9ef.text" = "Distance: ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "hLz-Kf-n3t"; */
+"hLz-Kf-n3t.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Reset"; ObjectID = "iuq-mN-QRR"; */
+"iuq-mN-QRR.normalTitle" = "Reset";
+
+/* Class = "UITabBarItem"; title = "Snapshot"; ObjectID = "nz9-6B-3Hs"; */
+"nz9-6B-3Hs.title" = "Snapshot";
+
+/* Class = "UITextField"; text = "13"; ObjectID = "oFs-ns-oJV"; */
+"oFs-ns-oJV.text" = "13";
+
+/* Class = "UILabel"; text = "Latitude for Center Point"; ObjectID = "ozJ-AE-hPZ"; */
+"ozJ-AE-hPZ.text" = "Latitude for Center Point";
+
+/* Class = "UILabel"; text = "Tap on the button to create a map snapshot for entered values."; ObjectID = "uvq-Cl-QFn"; */
+"uvq-Cl-QFn.text" = "Tap on the button to create a map snapshot for entered values.";
+
+/* Class = "UILabel"; text = "6.53 Km"; ObjectID = "yGq-pA-gbd"; */
+"yGq-pA-gbd.text" = "6.53 Km";

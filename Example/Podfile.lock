@@ -1,0 +1,22 @@
+PODS:
+  - CedarMaps (2.0.0):
+    - JSONModel (~> 1.7)
+    - Mapbox-iOS-SDK (~> 3.6)
+  - JSONModel (1.7.0)
+  - Mapbox-iOS-SDK (3.6.4)
+
+DEPENDENCIES:
+  - CedarMaps (from `../`)
+
+EXTERNAL SOURCES:
+  CedarMaps:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CedarMaps: 36e95195fc4fd3e657b9b23d568eaff3b0f293cd
+  JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
+  Mapbox-iOS-SDK: 47847dd44285477e0dfffd0130f65c8a52823ada
+
+PODFILE CHECKSUM: ad43b9956cf1f58bff64834a5e21f42f322108fa
+
+COCOAPODS: 1.3.1

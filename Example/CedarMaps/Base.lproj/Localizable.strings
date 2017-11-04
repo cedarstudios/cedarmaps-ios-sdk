@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  CedarMaps
+
+  Created by Saeed Taheri on 11/1/17.
+  Copyright © 2017 Saeed Taheri. All rights reserved.
+*/
+
+"Search" = "Search";
+"Input Empty" = "Input Empty";
+"Please fill all fields with appropriate values" = "Please fill all fields with appropriate values";
+"OK" = "OK";
+"Response Error" = "Response Error";
+"Directions Error" = "Directions Error";

@@ -1,25 +1,46 @@
 #
 # Be sure to run `pod lib lint CedarMaps.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
+# valid spec before submitting.
 #
-# Any lines starting with a # are optional, but encouraged
-#
+# Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '1.0.2'
-  s.cocoapods_version = '>= 0.36'
-  s.license          = 'MIT'
-  s.homepage         = 'https://www.kikojas.com/about-cedarmaps'
-  s.authors           = { 'Emad A.' => 'emad310@gmail.com', 'Saeed T' => 'saeed.taheri@gmail.com' }
+  s.version          = '2.0.0'
   s.summary          = 'CedarMaps iOS SDK'
+
+# This description is used to generate tags and improve search results.
+#   * Think: What does it do? Why did you write it? What is the focus?
+#   * Try to keep it short, snappy and to the point.
+#   * Write the description between the DESC delimiters below.
+#   * Finally, don't worry about the indent, CocoaPods strips it!
+
+  s.description      = <<-DESC
+                        The CedarMaps iOS SDK library is used to integrate CedarMaps tiles and using geocoding APIs in your iOS application.
+                        For using this library, you need valid credentials. Please visit http://cedarmaps.com for more information.
+                       DESC
+
+  s.homepage         = 'https://www.cedarmaps.com'
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.authors           = { 'CedarMaps' => 'info@cedarmaps.com', 'Saeed Taheri' => 'saeed.taheri@gmail.com' }
   s.source           = { :git => 'http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git', :tag => s.version.to_s }
-  s.source_files = 'Pod/Classes'
-  s.framework = 'UIKit'
-  s.platform     = :ios, '8.0'
+  s.social_media_url = 'https://twitter.com/cedarmaps'
+
+  s.platform = :ios, '8.0'
   s.requires_arc = true
-  s.public_header_files = 'Pod/Classes/**/*.h'
-  s.dependency 'Mapbox-iOS-SDK', '~> 3.3.4'
+  s.cocoapods_version = '>= 1.1'
+
+  s.source_files = 'CedarMaps/Classes/**/*'
+  s.public_header_files = 'CedarMaps/Headers/Public/*.h'
+  
+  s.resource_bundles = {
+    'CedarMaps' => ['CedarMaps/Assets/*.xcassets']
+  }
+
+  s.public_header_files = 'CedarMaps/Classes/**/*.h'
+  s.framework = 'UIKit'
+  s.dependency 'Mapbox-iOS-SDK', '~> 3.6'
+  s.dependency 'JSONModel', '~> 1.7'
 end
