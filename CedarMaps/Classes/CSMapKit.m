@@ -50,10 +50,8 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 - (void)prepareMapTiles:(void (^)(BOOL, NSError * _Nullable))completion {
     [CSAuthenticationManager.sharedAuthenticationManager accessToken:^(NSString * _Nullable token, NSError * _Nullable error) {
         
-        BOOL isReady = NO;
         if (token != nil) {
             [MGLAccountManager setAccessToken:token];
-            isReady = YES;
             if (completion != nil) {
                 completion(YES, nil);
             }
@@ -178,9 +176,9 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         completionHandler(nil, [CSError errorWithDescription:@"Empty input"]);
         return;
     }
-    NSInteger limitParam = MIN(MAX(limit, 1), 30);
+    int limitParam = MIN(MAX((int)limit, 1), 30);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%li",
+    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
                         self.mapID,
                         addressString,
@@ -212,9 +210,9 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         return;
     }
 
-    NSInteger limitParam = MIN(MAX(limit, 1), 30);
+    int limitParam = MIN(MAX((int)limit, 1), 30);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%li&location=%f,%f&distance=%f",
+    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&location=%f,%f&distance=%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
                         self.mapID,
                         addressString,
@@ -248,9 +246,9 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         return;
     }
 
-    NSInteger limitParam = MIN(MAX(limit, 1), 30);
+    int limitParam = MIN(MAX((int)limit, 1), 30);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%li&ne=%f,%f&sw=%f,%f",
+    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&ne=%f,%f&sw=%f,%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
                         self.mapID,
                         addressString,
@@ -369,14 +367,14 @@ typedef enum {
 #pragma mark - Map Snapshot
 
 - (void)createMapSnapshotWithOptions:(CSMapSnapshotOptions *)options withCompletionHandler:(CSMapSnapshotCompletionHandler)completionHandler {
-    NSInteger validZoomLevel = MIN(17, MAX(6, options.zoomLevel));
+    int validZoomLevel = MIN(17, MAX(6, (int)options.zoomLevel));
     
-    NSString *positionParam = options.center != nil ? [NSString stringWithFormat:@"%f,%f,%ld", options.center.coordinate.latitude, options.center.coordinate.longitude, validZoomLevel] : @"auto";
+    NSString *positionParam = options.center != nil ? [NSString stringWithFormat:@"%f,%f,%i", options.center.coordinate.latitude, options.center.coordinate.longitude, validZoomLevel] : @"auto";
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     
     CGSize validSize = CGSizeMake(MIN(MAX(options.size.width, 1), 1280), MIN(MAX(options.size.height, 1), 1280));
-    NSString *sizeParam = [NSString stringWithFormat:@"%ldx%ld", (NSInteger)(validSize.width), (NSInteger)(validSize.height)];
+    NSString *sizeParam = [NSString stringWithFormat:@"%ix%i", (int)(validSize.width), (int)(validSize.height)];
     NSString *scaleParam = scale > 1.0 ? @"@2x": @"";
 
     NSString *markersParam = @"";

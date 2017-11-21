@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '2.0.0'
+  s.version          = '2.0.1'
   s.summary          = 'CedarMaps iOS SDK'
 
 # This description is used to generate tags and improve search results.
@@ -41,6 +41,6 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'CedarMaps/Classes/**/*.h'
   s.framework = 'UIKit'
-  s.dependency 'Mapbox-iOS-SDK', '~> 3.6'
+  s.dependency 'Mapbox-iOS-SDK', '~> 3.7'
   s.dependency 'JSONModel', '~> 1.7'
 end
