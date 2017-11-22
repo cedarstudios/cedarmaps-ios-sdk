@@ -53,7 +53,11 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
 }
 
 - (BOOL)isAccessTokenSaved {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentAccessToken];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kCurrentAccessToken]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)accessToken:(nonnull void (^)(NSString * _Nullable, NSError * _Nullable))completion {
