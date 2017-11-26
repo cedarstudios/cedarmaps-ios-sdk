@@ -49,7 +49,7 @@
 }
 
 - (void)initialSetup {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [self assetsBundle];
     [self.logoView setImage:[UIImage imageNamed:@"cedarmaps" inBundle:bundle compatibleWithTraitCollection:nil]];
     self.attributionButton.alpha = 0;
     self.layer.backgroundColor = [UIColor colorWithRed: 249.0/255.0 green: 245.0/255.0 blue: 237.0/255.0 alpha: 1.0].CGColor;
@@ -86,12 +86,17 @@
 {
     MGLAnnotationImage *annotationImage = [super defaultAnnotationImage];
     
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    UIImage *image = [UIImage imageNamed:@"cedarmaps_default" inBundle:bundle compatibleWithTraitCollection:nil];
-    image = [image imageWithAlignmentRectInsets:
-             UIEdgeInsetsMake(0, 0, image.size.height / 2, 0)];
-    
-    [annotationImage setImage:image];
+    NSBundle *bundle = [self assetsBundle];
+    if (bundle) {
+        UIImage *image = [UIImage imageNamed:@"cedarmaps_default" inBundle:bundle compatibleWithTraitCollection:nil];
+        image = [image imageWithAlignmentRectInsets:
+                 UIEdgeInsetsMake(0, 0, image.size.height / 2, 0)];
+        
+        if (image) {
+            [annotationImage setImage:image];
+        }
+    }
+
     return annotationImage;
 }
 
@@ -109,6 +114,16 @@
                                      CGRectGetHeight(self.bounds) - CGRectGetHeight(self.logoView.bounds) - bottomInset,
                                      CGRectGetWidth(self.logoView.bounds),
                                      CGRectGetHeight(self.logoView.bounds));
+}
+
+- (NSBundle *)assetsBundle {
+    NSBundle *podBundle = [NSBundle bundleForClass:[self classForCoder]];
+    NSURL *bundleURL = [podBundle URLForResource:@"CedarMaps" withExtension:@"bundle"];
+    if (bundleURL) {
+        NSBundle *bundle = [NSBundle bundleWithURL:bundleURL];
+        return bundle;
+    }
+    return nil;
 }
 
 @end
