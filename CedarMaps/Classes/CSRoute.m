@@ -9,6 +9,10 @@
 
 @implementation CSRoute
 
+- (NSTimeInterval)time {
+    return _time / 1000;
+}
+
 - (void)setBoundingBoxWithNSArray:(NSArray *)array {
     if (array && array.count == 4) {
         CLLocationCoordinate2D ne = CLLocationCoordinate2DMake([array[3] doubleValue], [array[2] doubleValue]);

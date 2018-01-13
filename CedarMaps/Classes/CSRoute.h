@@ -7,6 +7,7 @@
 
 #import <JSONModel/JSONModel.h>
 #import "CSBoundingBox.h"
+#import "CSRouteInstruction.h"
 
 @protocol CSRoute;
 
@@ -38,6 +39,11 @@
  The location points which make a route.
  */
 @property (nonatomic, strong, nullable) NSArray<CLLocation *> <Optional> *points;
+
+/**
+ * Verbal representation of the route.
+ */
+@property (nonatomic, strong, nullable) NSArray<CSRouteInstruction *> <Optional, CSRouteInstruction> *instructions;
 
 @end
 
