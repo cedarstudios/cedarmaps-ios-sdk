@@ -302,11 +302,15 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 - (void)calculateDirections:(NSArray<CSRoutePair *> *)routePairs
       withCompletionHandler:(CSDirectionCompletionHandler)completionHandler {
     
-    [self fetchDirectionOrDistance:kDirection forRoutePairs:routePairs withCompletionHandler:completionHandler];
+    [self fetchDirectionOrDistance:kDirection forRoutePairs:routePairs withInstructions:NO locale:nil withCompletionHandler:completionHandler];
+}
+
+- (void)calculateDirectionsWithInstructionsForRoutePairs:(NSArray<CSRoutePair *> *)routePairs locale:(NSLocale *)locale withCompletionHandler:(CSDirectionCompletionHandler)completionHandler {
+    [self fetchDirectionOrDistance:kDirection forRoutePairs:routePairs withInstructions:YES locale:locale withCompletionHandler:completionHandler];
 }
 
 - (void)calculateDistance:(NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(CSDirectionCompletionHandler)completionHandler {
-    [self fetchDirectionOrDistance:kDistance forRoutePairs:routePairs withCompletionHandler:completionHandler];
+    [self fetchDirectionOrDistance:kDistance forRoutePairs:routePairs withInstructions:NO locale:nil withCompletionHandler:completionHandler];
 }
 
 typedef enum {
@@ -314,7 +318,7 @@ typedef enum {
     kDistance
 } DirectionOrDistance;
 
-- (void)fetchDirectionOrDistance:(DirectionOrDistance)option forRoutePairs:(NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(CSDirectionCompletionHandler)completionHandler {
+- (void)fetchDirectionOrDistance:(DirectionOrDistance)option forRoutePairs:(NSArray<CSRoutePair *> *)routePairs withInstructions:(BOOL)shouldGetInstructions locale:(NSLocale *)locale withCompletionHandler:(CSDirectionCompletionHandler)completionHandler {
     
     NSString *pointsStr = @"";
     for (int i = 0; i < MIN(routePairs.count, 100); i++) {
@@ -334,6 +338,9 @@ typedef enum {
                         self.directionProfile];
     if (pointsStr.length > 0) {
         urlStr = [urlStr stringByAppendingString:pointsStr];
+    }
+    if (locale.languageCode) {
+        urlStr = [urlStr stringByAppendingFormat:@"?instructions=%@&locale=%@", shouldGetInstructions ? @"true" : @"false", locale.languageCode];
     }
     
     __weak CSMapKit *weakSelf = self;
