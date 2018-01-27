@@ -344,7 +344,7 @@ typedef enum {
     if (@available(iOS 10, *)) {
         languageCode = locale.languageCode;
     } else {
-        languageCode = [locale objectForKey:NSLocaleLanguageCode]
+        languageCode = [locale objectForKey:NSLocaleLanguageCode];
     }
     
     if (languageCode) {
