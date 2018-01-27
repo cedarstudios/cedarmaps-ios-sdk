@@ -339,8 +339,16 @@ typedef enum {
     if (pointsStr.length > 0) {
         urlStr = [urlStr stringByAppendingString:pointsStr];
     }
-    if (locale.languageCode) {
-        urlStr = [urlStr stringByAppendingFormat:@"?instructions=%@&locale=%@", shouldGetInstructions ? @"true" : @"false", locale.languageCode];
+    
+    NSString *languageCode;
+    if (@available(iOS 10, *)) {
+        languageCode = locale.languageCode;
+    } else {
+        languageCode = [locale objectForKey:NSLocaleLanguageCode]
+    }
+    
+    if (languageCode) {
+        urlStr = [urlStr stringByAppendingFormat:@"?instructions=%@&locale=%@", shouldGetInstructions ? @"true" : @"false", languageCode];
     }
     
     __weak CSMapKit *weakSelf = self;
