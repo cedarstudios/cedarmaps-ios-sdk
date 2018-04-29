@@ -89,14 +89,19 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
     NSAssert(self.clientSecret != nil, @"No Client Secret was specified. Set your given credentials before trying to get an access token.");
 
     NSString *params = [NSString stringWithFormat:@"client_id=%@&client_secret=%@", self.clientID, self.clientSecret];
-    params = [params stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    params = [params stringByRemovingPercentEncoding];
 
     NSURL *tokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@token", self.baseURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:tokenURL];
     [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPMethod:@"POST"];
 
+    __weak CSAuthenticationManager *weakSelf = self;
     [[[CSAuthenticationManager sharedURLSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable token, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
+        if (!weakSelf) {
+            completion(nil, [CSError errorWithDescription:@"CSAuthenticationManager instance should be retained."]);
+            return;
+        }
         
         if (responseError != nil) {
             completion(nil, responseError);
@@ -111,15 +116,15 @@ static NSString * const kCurrentAccessToken = @"CedarMapsSDKUserAccessToken_v1";
                     return;
                 }
                 
-                _accessToken = result[@"access_token"];
+                weakSelf.accessToken = result[@"access_token"];
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:_accessToken forKey:kCurrentAccessToken];
-                if (_accessToken) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kCedarMapsAccessTokenIsReadeyNotification object:nil userInfo:@{kCedarMapsAccessTokenIsReadeyNotification: _accessToken}];
+                [defaults setObject:weakSelf.accessToken forKey:kCurrentAccessToken];
+                if (weakSelf.accessToken) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kCedarMapsAccessTokenIsReadeyNotification object:nil userInfo:@{kCedarMapsAccessTokenIsReadeyNotification: weakSelf.accessToken}];
                 }
                 
-                completion(_accessToken, nil);
+                completion(weakSelf.accessToken, nil);
                 return;
             } else {
                 completion(nil, [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:nil]);

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '2.1.1'
+  s.version          = '3.0.0'
   s.summary          = 'CedarMaps iOS SDK'
 
 # This description is used to generate tags and improve search results.
@@ -28,9 +28,9 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/cedarmaps'
 
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '9.0'
   s.requires_arc = true
-  s.cocoapods_version = '>= 1.1'
+  s.cocoapods_version = '>= 1.2'
 
   s.source_files = 'CedarMaps/Classes/**/*'
   s.public_header_files = 'CedarMaps/Headers/Public/*.h'
@@ -41,6 +41,6 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'CedarMaps/Classes/**/*.h'
   s.framework = 'UIKit'
-  s.dependency 'Mapbox-iOS-SDK', '~> 3.7'
+  s.dependency 'Mapbox-iOS-SDK', '~> 4.0'
   s.dependency 'JSONModel', '~> 1.7'
 end

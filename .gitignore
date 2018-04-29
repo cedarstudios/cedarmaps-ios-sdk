@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/swift,xcode,carthage,cocoapods,objective-c
+# Created by https://www.gitignore.io/api/xcode,macos,swift,carthage,cocoapods,objective-c
 
 ### Carthage ###
 # Carthage
@@ -13,9 +13,36 @@ Carthage/Build
 ## CocoaPods GitIgnore Template
 
 # CocoaPods - Only use to conserve bandwidth / Save time on Pushing
-#           - Also handy if you have a lage number of dependant pods
-#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGONRE THE LOCK FILE
+#           - Also handy if you have a large number of dependant pods
+#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
+
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
 ### Objective-C ###
 # Xcode
@@ -49,7 +76,7 @@ xcuserdata/
 *.dSYM
 
 # CocoaPods - Refactored to standalone file
-.bundle
+
 
 # Carthage - Refactored to standalone file
 
@@ -128,4 +155,5 @@ playground.xcworkspace
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
-# End of https://www.gitignore.io/api/swift,xcode,carthage,cocoapods,objective-c
+
+# End of https://www.gitignore.io/api/xcode,macos,swift,carthage,cocoapods,objective-c
