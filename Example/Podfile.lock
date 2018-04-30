@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CedarMaps: 504c3eb3a8e16edc09e47b4584a06b7315e1bb10
+  CedarMaps: 44f2a75fe9f0cdea435954d3dd3bbf2ea8935629
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   Mapbox-iOS-SDK: 271754e96eb4434ba1b0a8c68432e1ea26fe9841
 
