@@ -30,7 +30,9 @@ Pod::Spec.new do |s|
 
   s.platform = :ios, '9.0'
   s.requires_arc = true
-  s.cocoapods_version = '>= 1.2'
+
+  s.static_framework = true
+  s.cocoapods_version = '>= 1.4.0'
 
   s.source_files = 'CedarMaps/Classes/**/*'
   s.public_header_files = 'CedarMaps/Headers/Public/*.h'
@@ -40,7 +42,6 @@ Pod::Spec.new do |s|
   }
 
   s.public_header_files = 'CedarMaps/Classes/**/*.h'
-  s.framework = 'UIKit'
   s.dependency 'Mapbox-iOS-SDK', '~> 4.0'
   s.dependency 'JSONModel', '~> 1.7'
 end
