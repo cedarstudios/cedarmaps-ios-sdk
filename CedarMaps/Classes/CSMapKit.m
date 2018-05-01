@@ -1,4 +1,4 @@
-@import Mapbox;
+#import <Mapbox/Mapbox.h>
 #import "CSMapKit.h"
 #import "CSError.h"
 #import "CSAuthenticationManager.h"

@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@import Mapbox;
+#import <Mapbox/Mapbox.h>
 
 
 /**
