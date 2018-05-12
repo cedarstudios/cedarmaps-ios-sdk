@@ -9,11 +9,25 @@
 
 @implementation CSReverseGeocodePlacemark
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"trafficZone": @"traffic_zone"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"components": @"components",
+             @"address": @"address",
+             @"locality": @"locality",
+             @"district": @"district",
+             @"place": @"place",
+             @"city": @"city",
+             @"province": @"province",
+             @"trafficZone": @"traffic_zone"
+             };
+}
+
++ (NSValueTransformer *)componentsJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[CSReverseGeocodeComponent class]];
+}
+
++ (NSValueTransformer *)trafficZoneJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[CSTrafficZone class]];
 }
 
 @end
@@ -22,12 +36,12 @@
 
 @implementation CSTrafficZone
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"inEvenOdd": @"in_evenodd",
-                           @"inCentral": @"in_central"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"name": @"name",
+             @"inCentral": @"in_central",
+             @"inEvenOdd": @"in_evenodd"
+             };
 }
 
 @end
@@ -36,12 +50,12 @@
 
 @implementation CSReverseGeocodeComponent
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"longName": @"long_name",
-                           @"shortName": @"short_name"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"longName": @"long_name",
+             @"shortName": @"short_name",
+             @"type": @"type"
+              };
 }
 
 @end

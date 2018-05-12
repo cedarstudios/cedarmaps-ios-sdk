@@ -9,18 +9,35 @@
 
 @implementation CSForwardGeocodePlacemark
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"identifier": @"id",
-                           @"nameEn": @"name_en",
-                           @"region": @"location"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"identifier": @"id",
+             @"name": @"name",
+             @"nameEn": @"name_en",
+             @"type": @"type",
+             @"region": @"location",
+             @"address": @"address",
+             @"components": @"components"
+             };
+}
+
++ (NSValueTransformer *)regionJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[CSRegion class]];
 }
 
 @end
 
 @implementation CSForwardGeocodeComponent
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"country": @"country",
+             @"province": @"province",
+             @"city": @"city",
+             @"districts": @"districts",
+             @"localities": @"localities"
+             };
+}
 
 @end
 

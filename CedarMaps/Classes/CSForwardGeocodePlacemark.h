@@ -5,17 +5,31 @@
 //  Created by Saeed Taheri on 10/24/17.
 //
 
-#import <JSONModel/JSONModel.h>
+#import <Mantle/Mantle.h>
 #import "CSRegion.h"
 
-@protocol CSForwardGeocodePlacemark;
-@class CSForwardGeocodeComponent;
+#pragma mark Components
+
+/**
+ *  Represents placemark components data for a geographic location in a forward geocode request.
+ */
+@interface CSForwardGeocodeComponent: MTLModel <MTLJSONSerializing>
+
+@property (nonatomic, strong, nullable) NSString *country;
+@property (nonatomic, strong, nullable) NSString *province;
+@property (nonatomic, strong, nullable) NSString *city;
+@property (nonatomic, strong, nullable) NSArray<NSString *> *districts;
+@property (nonatomic, strong, nullable) NSArray<NSString *> *localities;
+
+@end
+
+#pragma mark CSForwardGeocodePlacemark
 
 /**
  *  Represents placemark data for a geographic location in a forward geocode request. Placemark data can be
  *  information such as the province, city, and street address.
  */
-@interface CSForwardGeocodePlacemark: JSONModel
+@interface CSForwardGeocodePlacemark: MTLModel <MTLJSONSerializing>
 
 
 /**
@@ -33,7 +47,7 @@
 /**
  English name of the result.
  */
-@property (nonatomic, strong, nullable) NSString<Optional> *nameEn;
+@property (nonatomic, strong, nullable) NSString *nameEn;
 
 
 /**
@@ -45,7 +59,7 @@
 /**
  A simple generated address from components field.
  */
-@property (nonatomic, strong, nullable) NSString<Optional> *address;
+@property (nonatomic, strong, nullable) NSString *address;
 
 
 /**
@@ -57,7 +71,7 @@
 /**
  Geometric region of the result.
  */
-@property (nonatomic, strong, nullable) CSRegion<Optional> *region;
+@property (nonatomic, strong, nullable) CSRegion *region;
 
 @end
 
@@ -73,19 +87,3 @@ typedef NS_OPTIONS(NSUInteger, CSPlacemarkType) {
     CSPlacemarkTypeLocality   = 1 << 5,
 };
 NSString* _Nonnull stringValueForPlacemarkType(CSPlacemarkType type);
-
-#pragma mark Components
-
-
-/**
- *  Represents placemark components data for a geographic location in a forward geocode request.
- */
-@interface CSForwardGeocodeComponent: JSONModel
-
-@property (nonatomic, strong, nullable) NSString<Optional> *country;
-@property (nonatomic, strong, nullable) NSString<Optional> *province;
-@property (nonatomic, strong, nullable) NSString<Optional> *city;
-@property (nonatomic, strong, nullable) NSArray<NSString *> <Optional> *districts;
-@property (nonatomic, strong, nullable) NSArray<NSString *> <Optional> *localities;
-
-@end

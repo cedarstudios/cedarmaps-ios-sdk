@@ -1,4 +1,4 @@
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
 #import "CSForwardGeocodePlacemark.h"
 #import "CSReverseGeocodePlacemark.h"
 #import "CSRoute.h"

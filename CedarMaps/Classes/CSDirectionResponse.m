@@ -9,11 +9,15 @@
 
 @implementation CSDirectionResponse
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"routes": @"result.routes"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"routes": @"result.routes",
+             @"status": @"status"
+             };
+}
+
++ (NSValueTransformer *)routesJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[CSRoute class]];
 }
 
 @end

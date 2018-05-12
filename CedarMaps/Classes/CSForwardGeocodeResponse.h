@@ -5,12 +5,12 @@
 //  Created by Saeed Taheri on 10/24/17.
 //
 
-#import <JSONModel/JSONModel.h>
+#import <Mantle/Mantle.h>
 #import "CSForwardGeocodePlacemark.h"
 
-@interface CSForwardGeocodeResponse : JSONModel
+@interface CSForwardGeocodeResponse: MTLModel <MTLJSONSerializing>
 
 @property (nonatomic, strong, nonnull) NSString *status;
-@property (nonatomic, strong, nullable) NSArray<CSForwardGeocodePlacemark *> <CSForwardGeocodePlacemark, Optional> *results;
+@property (nonatomic, strong, nullable) NSArray<CSForwardGeocodePlacemark *> *results;
 
 @end

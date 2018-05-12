@@ -6,13 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
 
 
 /**
  A wrapper class consisting of a source and a destination for using in a Directions or Distance request.
  */
-@interface CSRoutePair : NSObject
+@interface CSRoutePair: NSObject
 
 
 /**

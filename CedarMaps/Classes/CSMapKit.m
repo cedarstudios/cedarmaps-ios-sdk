@@ -140,7 +140,13 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         } else if (data != nil) {
             NSError *parsingError;
 
-            CSReverseGeocodeResponse *reverseGeocodeResponse = [[CSReverseGeocodeResponse alloc] initWithData:data error:&parsingError];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&parsingError];
+            if (parsingError != nil) {
+                completionHandler(nil, parsingError);
+                return;
+            }
+            
+            CSReverseGeocodeResponse *reverseGeocodeResponse = [MTLJSONAdapter modelOfClass:CSReverseGeocodeResponse.class fromJSONDictionary:dict error:&parsingError];
             
             if (parsingError != nil) {
                 completionHandler(nil, parsingError);
@@ -279,7 +285,13 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         } else if (data != nil) {
             NSError *parsingError;
             
-            CSForwardGeocodeResponse *forwardGeocodeResponse = [[CSForwardGeocodeResponse alloc] initWithData:data error:&parsingError];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&parsingError];
+            if (parsingError != nil) {
+                completionHandler(nil, parsingError);
+                return;
+            }
+            
+            CSForwardGeocodeResponse *forwardGeocodeResponse = [MTLJSONAdapter modelOfClass:CSForwardGeocodeResponse.class fromJSONDictionary:dict error:&parsingError];
             
             if (parsingError != nil) {
                 completionHandler(nil, parsingError);
@@ -361,7 +373,13 @@ typedef enum {
         } else if (data != nil) {
             NSError *parsingError;
             
-            CSDirectionResponse *directionResponse = [[CSDirectionResponse alloc] initWithData:data error:&parsingError];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&parsingError];
+            if (parsingError != nil) {
+                completionHandler(nil, parsingError);
+                return;
+            }
+            
+            CSDirectionResponse *directionResponse = [MTLJSONAdapter modelOfClass:CSDirectionResponse.class fromJSONDictionary:dict error:&parsingError];
             
             if (parsingError != nil) {
                 completionHandler(nil, parsingError);
