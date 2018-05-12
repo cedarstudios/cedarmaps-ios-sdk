@@ -5,16 +5,14 @@
 //  Created by Saeed Taheri on 10/25/17.
 //
 
-#import <JSONModel/JSONModel.h>
+#import <Mantle/Mantle.h>
 #import "CSBoundingBox.h"
 #import "CSRouteInstruction.h"
-
-@protocol CSRoute;
 
 /**
  * A CSRoute object shows direction and distance information.
  */
-@interface CSRoute: JSONModel
+@interface CSRoute: MTLModel <MTLJSONSerializing>
 
 
 /**
@@ -38,12 +36,12 @@
 /**
  The location points which make a route.
  */
-@property (nonatomic, strong, nullable) NSArray<CLLocation *> <Optional> *points;
+@property (nonatomic, strong, nullable) NSArray<CLLocation *> *points;
 
 /**
  * Verbal representation of the route.
  */
-@property (nonatomic, strong, nullable) NSArray<CSRouteInstruction *> <Optional, CSRouteInstruction> *instructions;
+@property (nonatomic, strong, nullable) NSArray<CSRouteInstruction *> *instructions;
 
 @end
 

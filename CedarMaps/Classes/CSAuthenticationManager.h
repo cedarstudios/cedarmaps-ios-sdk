@@ -2,7 +2,7 @@
 
 static NSString * _Nonnull const kCedarMapsAccessTokenIsReadeyNotification = @"kCedarMapsAccessTokenIsReadeyNotification";
 
-@interface CSAuthenticationManager : NSObject
+@interface CSAuthenticationManager: NSObject
 
 @property (nonatomic, strong, readonly, nullable) NSString *clientID;
 @property (nonatomic, strong, readonly, nullable) NSString *clientSecret;

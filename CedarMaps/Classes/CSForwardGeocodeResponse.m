@@ -9,4 +9,15 @@
 
 @implementation CSForwardGeocodeResponse
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"results": @"results",
+             @"status": @"status"
+             };
+}
+
++ (NSValueTransformer *)resultsJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[CSForwardGeocodePlacemark class]];
+}
+
 @end

@@ -9,4 +9,15 @@
 
 @implementation CSReverseGeocodeResponse
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"result": @"result",
+             @"status": @"status"
+             };
+}
+
++ (NSValueTransformer *)resultsJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[CSReverseGeocodePlacemark class]];
+}
+
 @end

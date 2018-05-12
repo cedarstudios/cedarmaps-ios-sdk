@@ -18,37 +18,32 @@
     return self;
 }
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"northEast": @"ne",
-                           @"southWest": @"sw"
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"northEast": @"ne",
+             @"southWest": @"sw"
+             };
 }
 
-- (void)setNorthEastWithString:(NSString *)string {
-    _northEast = [self CLLocationFromNSString:string];
++ (NSValueTransformer *)northEastJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^CLLocation* (NSString *value, BOOL *success, NSError *__autoreleasing *error) {
+        return [self CLLocationFromNSString:value];
+    } reverseBlock:^NSString* (CLLocation *location, BOOL *success, NSError *__autoreleasing *error) {
+        return [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
+    }];
 }
 
-- (NSString *)JSONObjectForNorthEast {
-    return [self JSONObjectFromCLLocation:_northEast];
++ (NSValueTransformer *)southWestJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^CLLocation* (NSString *value, BOOL *success, NSError *__autoreleasing *error) {
+        return [self CLLocationFromNSString:value];
+    } reverseBlock:^NSString* (CLLocation *location, BOOL *success, NSError *__autoreleasing *error) {
+        return [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
+    }];
 }
 
-- (void)setSouthWestWithString:(NSString *)string {
-    _southWest = [self CLLocationFromNSString:string];
-}
-
-- (NSString *)JSONObjectForSouthWest {
-    return [self JSONObjectFromCLLocation:_southWest];
-}
-
-- (CLLocation *)CLLocationFromNSString:(NSString *)string {
++ (CLLocation *)CLLocationFromNSString:(NSString *)string {
     NSArray *comps = [string componentsSeparatedByString:@","];
     return [[CLLocation alloc] initWithLatitude:[comps[0] doubleValue] longitude:[comps[1] doubleValue]];
-}
-
-- (NSString *)JSONObjectFromCLLocation:(CLLocation *)location {
-    return [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
 }
 
 @end

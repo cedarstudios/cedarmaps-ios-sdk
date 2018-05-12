@@ -15,9 +15,9 @@
 {
 
     [[CSMapKit sharedMapKit] setCredentialsWithClientID:@"YOUR_CLIENT_ID" clientSecret:@"YOUR_CLIENT_SECRET"];
-
-    [[CSMapKit sharedMapKit] prepareMapTiles:^(BOOL isReady, NSError * _Nullable error) {
     
+    [[CSMapKit sharedMapKit] prepareMapTiles:^(BOOL isReady, NSError * _Nullable error) {
+        
     }];
     
     return YES;

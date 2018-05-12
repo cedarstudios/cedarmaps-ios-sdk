@@ -5,16 +5,15 @@
 //  Created by Saeed Taheri on 10/24/17.
 //
 
-#import <JSONModel/JSONModel.h>
+#import <Mantle/Mantle.h>
+#import <CoreLocation/CoreLocation.h>
 #import "CSBoundingBox.h"
-@import CoreLocation;
-
 
 /**
  *
  * Geometric region of a Forward Geocode result.
  */
-@interface CSRegion: JSONModel
+@interface CSRegion: MTLModel <MTLJSONSerializing>
 
 
 /**

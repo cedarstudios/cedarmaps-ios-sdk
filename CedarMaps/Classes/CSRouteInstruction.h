@@ -5,10 +5,8 @@
 //  Created by Saeed Taheri on 1/13/18.
 //
 
-#import <JSONModel/JSONModel.h>
-@import CoreLocation;
-
-@protocol CSRouteInstruction;
+#import <Mantle/Mantle.h>
+#import <CoreLocation/CoreLocation.h>
 
 typedef NS_ENUM(NSUInteger, CSInstructionSign) {
     CSInstructionSignKeepLeft = -7,
@@ -28,7 +26,7 @@ typedef NS_ENUM(NSUInteger, CSInstructionSign) {
 /**
  * Verbal representation of a route section in routing.
  */
-@interface CSRouteInstruction : JSONModel
+@interface CSRouteInstruction: MTLModel <MTLJSONSerializing>
 
 /**
  Distance in a route section in meters using car profile.

@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CSMapSnapshotMarker.h"
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
 
 
 /**

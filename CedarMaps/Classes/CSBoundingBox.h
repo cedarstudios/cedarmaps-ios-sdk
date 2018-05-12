@@ -6,15 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <JSONModel/JSONModel.h>
-@import CoreLocation;
-
-@protocol CSBoundingBox;
+#import <Mantle/Mantle.h>
+#import <CoreLocation/CoreLocation.h>
 
 /**
  * The class used for creating a rectangular region bu specifying south west and north east coordinates.
  */
-@interface CSBoundingBox: JSONModel
+@interface CSBoundingBox: MTLModel <MTLJSONSerializing>
 
 
 /**

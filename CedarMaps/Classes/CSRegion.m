@@ -9,40 +9,40 @@
 
 @implementation CSRegion
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{ @"boundingBox": @"bb",
-                           };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
-}
-
-- (void)setBoundingBoxWithNSDictionary:(NSDictionary *)dic {
-    NSArray *neComps = [[dic objectForKey:@"ne"] componentsSeparatedByString:@","];
-    NSArray *swComps = [[dic objectForKey:@"sw"] componentsSeparatedByString:@","];
-    CLLocationCoordinate2D ne = CLLocationCoordinate2DMake([neComps[0] doubleValue], [neComps[1] doubleValue]);
-    CLLocationCoordinate2D sw = CLLocationCoordinate2DMake([swComps[0] doubleValue], [swComps[1] doubleValue]);
-    _boundingBox = [[CSBoundingBox alloc] initWithNorthEastCoordinate:ne southWestCoordinate:sw];
-}
-
-- (NSDictionary *)JSONObjectForBoundingBox {
-    if (_boundingBox == nil) {
-        return nil;
-    }
-    return @{@"ne": [NSString stringWithFormat:@"%f,%f", _boundingBox.northEast.coordinate.latitude, _boundingBox.northEast.coordinate.longitude],
-             @"sw": [NSString stringWithFormat:@"%f,%f", _boundingBox.southWest.coordinate.latitude, _boundingBox.southWest.coordinate.longitude]
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"boundingBox": @"bb",
+             @"center": @"center"
              };
 }
 
-- (void)setCenterWithNSString:(NSString *)string {
-    NSArray *comps = [string componentsSeparatedByString:@","];
-    _center = [[CLLocation alloc] initWithLatitude:[comps[0] doubleValue] longitude:[comps[1] doubleValue]];
++ (NSValueTransformer *)boundingBoxJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSDictionary* dict, BOOL *success, NSError *__autoreleasing *error) {
+        NSArray *neComps = [[dict objectForKey:@"ne"] componentsSeparatedByString:@","];
+        NSArray *swComps = [[dict objectForKey:@"sw"] componentsSeparatedByString:@","];
+        CLLocationCoordinate2D ne = CLLocationCoordinate2DMake([neComps[0] doubleValue], [neComps[1] doubleValue]);
+        CLLocationCoordinate2D sw = CLLocationCoordinate2DMake([swComps[0] doubleValue], [swComps[1] doubleValue]);
+        return [[CSBoundingBox alloc] initWithNorthEastCoordinate:ne southWestCoordinate:sw];
+    } reverseBlock:^id(CSBoundingBox *bb, BOOL *success, NSError *__autoreleasing *error) {
+        if (!bb) {
+            return nil;
+        }
+        return @{@"ne": [NSString stringWithFormat:@"%f,%f", bb.northEast.coordinate.latitude, bb.northEast.coordinate.longitude],
+                 @"sw": [NSString stringWithFormat:@"%f,%f", bb.southWest.coordinate.latitude, bb.southWest.coordinate.longitude]
+                 };
+    }];
 }
 
-- (NSString *)JSONObjectForCenter {
-    if (_center == nil) {
-        return nil;
-    }
-    return [NSString stringWithFormat:@"%f,%f", _center.coordinate.latitude, _center.coordinate.longitude];
++ (NSValueTransformer *)centerJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString* string, BOOL *success, NSError *__autoreleasing *error) {
+        NSArray *comps = [string componentsSeparatedByString:@","];
+        return [[CLLocation alloc] initWithLatitude:[comps[0] doubleValue] longitude:[comps[1] doubleValue]];
+    } reverseBlock:^id(CLLocation *center, BOOL *success, NSError *__autoreleasing *error) {
+        if (center == nil) {
+            return nil;
+        }
+        return [NSString stringWithFormat:@"%f,%f", center.coordinate.latitude, center.coordinate.longitude];
+    }];
 }
 
 @end

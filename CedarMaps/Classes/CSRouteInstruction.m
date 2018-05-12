@@ -13,12 +13,15 @@
     return _time / 1000;
 }
 
-+ (JSONKeyMapper *)keyMapper {
-    NSDictionary *map = @{
-                          @"streetName": @"street_name"
-                          };
-    
-    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:map];
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"distance": @"distance",
+             @"sign": @"sign",
+             @"time": @"time",
+             @"interval": @"interval",
+             @"text": @"text",
+             @"streetName": @"street_name"
+             };
 }
 
 @end
