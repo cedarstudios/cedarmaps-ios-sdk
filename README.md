@@ -1,13 +1,48 @@
-# CedarMaps
+# CedarMaps iOS SDK
 
-[![Version](https://img.shields.io/cocoapods/v/CedarMaps.svg?style=flat)](http://cocoapods.org/pods/CedarMaps)
-[![License](https://img.shields.io/cocoapods/l/CedarMaps.svg?style=flat)](http://cocoapods.org/pods/CedarMaps)
-[![Platform](https://img.shields.io/cocoapods/p/CedarMaps.svg?style=flat)](http://cocoapods.org/pods/CedarMaps)
+This guide will take you through the process of integrating CedarMaps into your iOS application.
 
-## Usage
+All the mentioned methods and tools in this document are tested on Xcode v9.3.
 
-### Initialization
-To use CedarMaps tiles and methods, you need a pair of Client ID and Client Secret which is used at the first step of initialising the SDK.
+## Table of Contents
+- [Installation](#installation)
+	-	[Required Permissions](#required-permissions)
+	-	[Configuring CedarMaps](#configuring-cedarmaps)
+		- [Changing API Base URL](#changing-api-base-url)
+    -   [Mapbox](#mapbox)
+        - [CSMapView](#csmapview)
+- [API Methods](#api-methods)
+	-	[Forward Geocoding](#forward-geocoding)
+	-	[Reverse Geocoding](#reverse-geocoding)
+	-	[Direction](#direction)
+	-	[Distance](#distance)
+	-	[Static Map Image](#static-map-images)
+- [Sample App](#more-examples-via-the-sample-app)
+
+
+## Installation
+
+CedarMaps is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile and run `pod install`.
+
+```ruby
+pod 'CedarMaps'
+```
+
+### Required Permissions
+
+If your app needs to access location services, add a description usage for `NSLocationWhenInUseUsageDescription` in your app's `Info.plist`:
+
+```xml
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>THE REASON OF REQUESTING LOCATION</string>
+```
+
+### Configuring CedarMaps
+
+To use CedarMaps tiles and methods, you need a pair of `clientID` and `clientSecret` which is used at the first step of initialising the SDK.
+
+`AppDelegate`'s `applicationDidFinishLaunchingWithOptions:` is a good place to initialize CedarMaps.
 
 ```objc
 [[CSMapKit sharedMapKit] setCredentialsWithClientID:@"CLIENT_ID" clientSecret:@"CLIENT_SECRET"];
@@ -16,7 +51,9 @@ To use CedarMaps tiles and methods, you need a pair of Client ID and Client Secr
 CSMapKit.shared.setCredentialsWithClientID("CLIENT_ID", clientSecret: "CLIENT_SECRET")
 ```
 
-If your project has its own base URL which is not the one SDK provides, you can set it via this method:
+#### Changing API Base URL
+
+If you've received an API Base URL, you can set it on `CSMapKit` shared object:
 
 ```objc
 [[CSMapKit sharedMapKit] setAPIBaseURL:@"API_BASE_URL"];
@@ -25,7 +62,14 @@ If your project has its own base URL which is not the one SDK provides, you can 
 CSMapKit.shared.setAPIBaseURL("API_BASE_URL")
 ```
 
-If you want to use CedarMaps tiles, there's one extra step to do. After doing this you can use an instance of ```CSMapView``` which is a subclass of Mapbox ```MGLMapView``` to show CedarMaps tiles.
+### Mapbox
+
+CedarMaps SDK is based on [Mapbox iOS SDK v4.0](https://github.com/mapbox/mapbox-gl-native) and provides extra API methods over Mapbox. 
+For more information about how to use Mapbox components and methods such as **Adding Markers**, **Showing Current Location**, etc., please see [Mapbox Getting Started](https://www.mapbox.com/help/first-steps-ios-sdk/).
+
+#### CSMapView
+
+If you want to use CedarMaps tiles, there's one extra step to do. After doing the following snippet, you can use an instance of ```CSMapView```, which is a subclass of Mapbox ```MGLMapView```, in either Storyboard or code; they shall not be used interchangeably.
 
 ```objc
 [[CSMapKit sharedMapKit] prepareMapTiles:^(BOOL isReady, NSError * _Nullable error) {
@@ -38,20 +82,19 @@ CSMapKit.shared.prepareMapTiles { isSuccesful, error in
 }
 ```
 
-### Geocoding Methods
+## API Methods
 
-There are a couple of methods related to reverse and forward geocoding points and addresses. These methods are all asynchronous and their completion handlers are called on the main queue.
+In addition to using MapView, you can use CedarMaps API to retrieve location based data and street search.
 
-Some of these methods are as follows. Check ```CSMapKit``` header fore more information.
+All API calls are asynchronous; they don't block the Main Queue. The completion handlers are all called on the Main Queue.
+
+You can also consult [CSMapKit.h](http://gitlab.cedar.ir/cedar.studios/cedarmaps-sdk-ios-public/blob/master/CedarMaps/Classes/CSMapKit.h) for detailed info on all of our methods. Some of the main methods are mentioned below.
+
+### Forward Geocoding
+
+For finding a street or some limited POIs, you can easily call ```geocode``` methods.
 
 ```objc
-- (void)reverseGeocodeLocation:(nonnull CLLocation *)location
-             completionHandler:(nonnull CSReverseGeocodeCompletionHandler)completionHandler;
-
-- (void)geocodeAddressString:(nonnull NSString *)addressString
-                    inRegion:(nonnull CLCircularRegion *)region
-           completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler;
-
 - (void)geocodeAddressString:(nonnull NSString *)addressString
                inBoundingBox:(nonnull CSBoundingBox *)boundingBox
                     withType:(CSPlacemarkType)type
@@ -59,17 +102,28 @@ Some of these methods are as follows. Check ```CSMapKit``` header fore more info
            completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler;
 ```
 ```swift
-open func reverseGeocodeLocation(_ location: CLLocation, completionHandler: @escaping CSReverseGeocodeCompletionHandler)
-
-open func geocodeAddressString(_ addressString: String, in region: CLCircularRegion, completionHandler: @escaping CSForwardGeocodeCompletionHandler)
-
 open func geocodeAddressString(_ addressString: String, in boundingBox: CSBoundingBox, with type: CSPlacemarkType, limit: Int, completionHandler: @escaping CSForwardGeocodeCompletionHandler)
 ```
 
-### Distance and Directions
-``CSMapKit`` has two methods for getting distance and directions between one pair or up to 100 pairs of points. They are mostly the same.
+More advanced street searches are available in the sample app.
 
-This is the directions method for both Objective-C and Swift.
+### Reverse Geocoding
+
+You can retrieve data about a location by using Reverse Geocode API.
+
+```objc
+- (void)reverseGeocodeLocation:(nonnull CLLocation *)location
+             completionHandler:(nonnull CSReverseGeocodeCompletionHandler)completionHandler;
+
+```
+```swift
+open func reverseGeocodeLocation(_ location: CLLocation, completionHandler: @escaping CSReverseGeocodeCompletionHandler)
+```
+
+### Direction
+     
+This method calculates the direction between points. It can be called with up to 50 different pairs in a single request.
+
 ```objc
 - (void)calculateDirections:(nonnull NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
 ```
@@ -77,7 +131,18 @@ This is the directions method for both Objective-C and Swift.
 open func calculateDirections(_ routePairs: [CSRoutePair], withCompletionHandler completionHandler: @escaping CSDirectionCompletionHandler)
 ```
 
-### Map Snapshot (Static Map Image)
+### Distance
+
+This method calculates the distance between points in meters. It can be called with up to 15 different points in a single request.
+
+```objc
+- (void)calculateDistance:(nonnull NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
+```
+```swift
+open func calculateDistance(_ routePairs: [CSRoutePair], withCompletionHandler completionHandler: @escaping CSDirectionCompletionHandler)
+```
+
+### Static Map Images
 You can request an ```UIImage``` of a desired map view with the following code snippet. You should create a ```CSMapSnapshotOptions``` beforehand to set custom properties.
 
 ```objc
@@ -102,32 +167,9 @@ CSMapKit.shared.createMapSnapshot(with: options) { (snapshot, error) in
 ```
 Optionally, you can specify markeres to be drawn on the map by setting ```markers``` property on ```CSMapSnapshotOptions``` instance.
 
-## Example
+## More Examples via the Sample App
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-Then, in ```CSAppDelegate.m``` file, set your own Client ID and Client Secret.
+To run the example project, clone the repo, and run `pod install` from the **Example** directory first.
+Then, in ```CSAppDelegate.m``` file, set your own `clientID` and `clientSecret`.
 
 The example project is a mix of Swift and Objective-C.  
-
-Since CedarMaps is using ```Mapbox``` for rendering map tiles, you can consult their [documentation](https://www.mapbox.com/ios-sdk/)
-
-## Requirements
-
-- Mapbox-iOS-SDK 
-
-## Installation
-
-CedarMaps is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'CedarMaps'
-```
-
-## Author
-
-CedarStudio ®, info@cedarmaps.com
-
-## License
-
-CedarMaps is available under the MIT license. See the LICENSE file for more info.
