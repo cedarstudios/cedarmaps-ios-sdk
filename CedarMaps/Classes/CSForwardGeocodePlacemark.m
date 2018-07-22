@@ -13,9 +13,12 @@
     return @{
              @"identifier": @"id",
              @"name": @"name",
+             @"alternateName": @"alt_name",
              @"nameEn": @"name_en",
              @"type": @"type",
              @"region": @"location",
+             @"category": @"category",
+             @"slug": @"slug",
              @"address": @"address",
              @"components": @"components"
              };
@@ -63,6 +66,9 @@ NSString* stringValueForPlacemarkType(CSPlacemarkType type) {
     }
     if (type & CSPlacemarkTypeRoundabout) {
         result = [result stringByAppendingString:@"roundabout,"];
+    }
+    if (type & CSPlacemarkTypePOI) {
+        result = [result stringByAppendingString:@"poi,"];
     }
     if (result.length > 1) {
         result = [result substringToIndex:result.length - 1];

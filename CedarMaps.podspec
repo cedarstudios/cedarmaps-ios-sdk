@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '3.0.1'
+  s.version          = '3.0.2'
   s.summary          = 'CedarMaps iOS SDK'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.platform = :ios, '9.0'
   s.requires_arc = true
 
-  s.static_framework = true
+  s.static_framework = false
   s.cocoapods_version = '>= 1.4.0'
 
   s.source_files = 'CedarMaps/Classes/**/*'
