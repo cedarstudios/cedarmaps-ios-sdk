@@ -43,6 +43,10 @@
  */
 @property (nonatomic, strong, nonnull) NSString *name;
 
+/**
+ Alternate name of the result. e.g Jordan, Africa
+ */
+@property (nonatomic, strong, nonnull) NSString *alternateName;
 
 /**
  English name of the result.
@@ -54,6 +58,16 @@
  Type of the result. e.g. street, locality, place, etc.
  */
 @property (nonatomic, strong, nonnull)  NSString *type;
+
+/**
+ Category of the result in case its type is poi.
+ */
+@property (nonatomic, strong, nullable)  NSString *category;
+
+/**
+ Kikojas slug of the result in case its type is poi.
+ */
+@property (nonatomic, strong, nullable)  NSString *slug;
 
 
 /**
@@ -85,5 +99,6 @@ typedef NS_OPTIONS(NSUInteger, CSPlacemarkType) {
     CSPlacemarkTypeExpressway = 1 << 3,
     CSPlacemarkTypeBoulevard  = 1 << 4,
     CSPlacemarkTypeLocality   = 1 << 5,
+    CSPlacemarkTypePOI        = 1 << 6
 };
 NSString* _Nonnull stringValueForPlacemarkType(CSPlacemarkType type);
