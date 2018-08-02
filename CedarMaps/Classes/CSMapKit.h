@@ -48,6 +48,13 @@
 - (void)setAPIBaseURL:(nullable NSString*)urlString;
 
 /**
+ * Use this property to control result types.
+ * Possible values are "cedarmaps.streets" and "cedarmaps.mix".
+ * By setting "cedarmaps.mix", POI search results are available.
+ */
+@property (nonatomic, strong, nonnull) NSString *mapID;
+
+/**
  This method should be called before using CedarMaps map tiles using CSMapView.
 
  @param completionHandler This handler is called when the process of preparing map tiles

@@ -9,7 +9,14 @@
 #import "CSAuthenticationManager.h"
 
 @interface MGLMapView()
+
 - (MGLAnnotationImage *)defaultAnnotationImage;
+
+@end
+
+@interface CSMapView()
+@property (nonatomic, strong) NSObject *localObserver;
+@property (nonatomic, strong) NSString *currentStyle;
 @end
 
 @implementation CSMapView
@@ -54,28 +61,55 @@
     self.attributionButton.alpha = 0;
     self.layer.backgroundColor = [UIColor colorWithRed: 249.0/255.0 green: 245.0/255.0 blue: 237.0/255.0 alpha: 1.0].CGColor;
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:kCedarMapsAccessTokenIsReadeyNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+    self.localObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kCedarMapsAccessTokenIsReadeyNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         NSString *token = [note.userInfo objectForKey:kCedarMapsAccessTokenIsReadeyNotification];
         [MGLAccountManager setAccessToken:token];
-        [self setupStyleURL];
+        
+        if (!self.currentStyle) {
+            [self setDefaultStyleURL];
+        } else {
+            [self setStyleURL:[NSURL URLWithString:self.currentStyle]];
+        }
     }];
     
     if ([[CSAuthenticationManager sharedAuthenticationManager] isAccessTokenSaved]) {
-        [self setupStyleURL];
+        [self setDefaultStyleURL];
     }
     
     [self setNeedsLayout];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:_localObserver];
 }
 
-- (void)setupStyleURL {
+- (void)setStyleURL:(NSURL *)styleURL {
+    if (!styleURL) {
+        return;
+    }
+    if (!self.currentStyle && [self.currentStyle isEqualToString:styleURL.absoluteString]) {
+        return;
+    }
+    
+    self.currentStyle = styleURL.absoluteString;
+    if ([styleURL.absoluteString containsString:@"access_token"]) {
+        [super setStyleURL:styleURL];
+    } else {
+        [[CSAuthenticationManager sharedAuthenticationManager] accessToken:^(NSString * _Nullable token, NSError * _Nullable error) {
+            if (token) {
+                NSString *urlStr = [NSString stringWithFormat:@"%@?access_token=%@", styleURL.absoluteString, token];
+                NSString *encodedURLStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                [super setStyleURL:[NSURL URLWithString:encodedURLStr]];
+            }
+        }];
+    }
+}
+
+- (void)setDefaultStyleURL {
     __weak CSMapView *weakSelf = self;
     [[CSAuthenticationManager sharedAuthenticationManager] accessToken:^(NSString * _Nullable token, NSError * _Nullable error) {
         if (token) {
-            NSString *urlStr = [NSString stringWithFormat:@"%@tiles/light.json?access_token=%@", [[CSAuthenticationManager sharedAuthenticationManager] baseURL], token];
+            NSString *urlStr = [NSString stringWithFormat:@"%@styles/cedarmaps.light.json?access_token=%@", [[CSAuthenticationManager sharedAuthenticationManager] baseURL], token];
             NSString *encodedURLStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             [weakSelf setStyleURL:[NSURL URLWithString:encodedURLStr]];
         }
@@ -118,7 +152,7 @@
 
 - (NSBundle *)assetsBundle {
     NSBundle *podBundle = [NSBundle bundleForClass:[self classForCoder]];
-    NSURL *bundleURL = [podBundle URLForResource:@"CedarMaps" withExtension:@"bundle"];
+    NSURL *bundleURL = [podBundle URLForResource:@"Assets" withExtension:@"bundle"];
     if (bundleURL) {
         NSBundle *bundle = [NSBundle bundleWithURL:bundleURL];
         return bundle;

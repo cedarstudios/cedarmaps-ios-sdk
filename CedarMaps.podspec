@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CedarMaps'
-  s.version          = '3.0.2'
+  s.version          = '3.1.0'
   s.summary          = 'CedarMaps iOS SDK'
 
 # This description is used to generate tags and improve search results.
@@ -35,13 +35,12 @@ Pod::Spec.new do |s|
   s.cocoapods_version = '>= 1.4.0'
 
   s.source_files = 'CedarMaps/Classes/**/*'
-  s.public_header_files = 'CedarMaps/Headers/Public/*.h'
-  
+  s.public_header_files = 'CedarMaps/Classes/**/*.h'
+
   s.resource_bundles = {
-    'CedarMaps' => ['CedarMaps/Assets/Media.xcassets']
+    'Assets' => ['CedarMaps/Assets/Media.xcassets']
   }
 
-  s.public_header_files = 'CedarMaps/Classes/**/*.h'
   s.dependency 'Mapbox-iOS-SDK', '~> 4.0'
   s.dependency 'Mantle', '~> 2.1'
 end

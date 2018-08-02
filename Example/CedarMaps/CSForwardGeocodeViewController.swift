@@ -46,6 +46,7 @@ class CSForwardGeocodeViewController: UIViewController {
     @IBOutlet private weak var mapView: CSMapView! {
         didSet {
             mapView.delegate = self
+            mapView.styleURL = URL(string: "https://api.cedarmaps.com/v1/tiles/light.json")
         }
     }
     @IBOutlet private weak var tableView: UITableView! {

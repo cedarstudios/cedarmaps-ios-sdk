@@ -10,7 +10,6 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
 @interface CSMapKit ()
 
-@property (nonatomic, strong, nonnull) NSString *mapID;
 @property (nonatomic, strong, nonnull) NSString *directionProfile;
 
 @end

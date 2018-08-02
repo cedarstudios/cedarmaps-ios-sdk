@@ -14,6 +14,7 @@ class CSReverseGeocodeViewController: UIViewController {
     @IBOutlet private weak var mapView: CSMapView! {
         didSet {
             mapView.delegate = self
+            mapView.styleURL = URL(string: "https://api.cedarmaps.com/v1/styles/cedarmaps.dark.json")
         }
     }
     @IBOutlet private weak var labelBackgroundView: UIView! {
@@ -42,6 +43,10 @@ class CSReverseGeocodeViewController: UIViewController {
         super.viewDidLoad()
         
         reverseGeocode(coordinate: mapView.centerCoordinate)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     private func reverseGeocode(coordinate: CLLocationCoordinate2D) {
