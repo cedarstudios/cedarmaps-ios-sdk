@@ -82,6 +82,20 @@ CSMapKit.shared.prepareMapTiles { isSuccesful, error in
 }
 ```
 
+##### Changing Map Style
+
+You can set various style URLs to instances of `CSMapView`:
+
+```swift
+mapView.styleUrl = "STYLE_URL"
+
+// Light Vector (Default): "https://api.cedarmaps.com/v1/styles/cedarmaps.light.json"
+// Dark Vector: "https://api.cedarmaps.com/v1/styles/cedarmaps.dark.json"
+// Raster: "https://api.cedarmaps.com/v1/tiles/light.json"
+```
+Make sure to use your base URL if you have one.
+
+
 ## API Methods
 
 In addition to using MapView, you can use CedarMaps API to retrieve location based data and street search.
