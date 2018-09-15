@@ -1,5 +1,5 @@
 PODS:
-  - CedarMaps (3.1.1):
+  - CedarMaps (3.1.2):
     - Mantle (~> 2.1)
     - Mapbox-iOS-SDK (~> 4.0)
   - Mantle (2.1.0):
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CedarMaps: 8ec531d1ce64ee3fea8dedb082c20fd3fe4c4257
+  CedarMaps: bcdfbaba6cbb00420e636ee40bab7849442c7693
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   Mapbox-iOS-SDK: e6a4f236c77f914ca2e19b929c6cc6b077ba1c4c
 

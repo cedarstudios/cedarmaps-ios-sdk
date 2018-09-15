@@ -167,23 +167,35 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
 - (void)geocodeAddressString:(NSString *)addressString
            completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
-    [self geocodeAddressString:addressString
-                      withType:CSPlacemarkTypeAll
-                         limit:30
-             completionHandler:completionHandler];
+    [self geocodeAddressString:addressString withType:CSPlacemarkTypeAll limit:30 completionHandler:completionHandler];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString
                     withType:(CSPlacemarkType)type
                        limit:(NSInteger)limit
            completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
+    [self geocodeAddressString:addressString withType:type limit:limit completionHandler:completionHandler];
+}
+
+- (void)geocodeAddressString:(NSString *)addressString
+                    inRegion:(CLCircularRegion *)region
+           completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
+    [self geocodeAddressString:addressString inRegion:region withType:CSPlacemarkTypeAll limit:30 completionHandler:completionHandler];
+}
+
+- (void)geocodeAddressString:(nonnull NSString *)addressString
+                    withType:(CSPlacemarkType)type
+                       limit:(NSInteger)limit
+            customParameters:(nullable NSDictionary<NSString *, NSString *> *)parameters
+           completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler {
+
     if (addressString.length == 0) {
         completionHandler(nil, [CSError errorWithDescription:@"Empty input"]);
         return;
     }
     int limitParam = MIN(MAX((int)limit, 1), 30);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i",
+    __block NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
                         self.mapID,
                         addressString,
@@ -193,15 +205,12 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     if (typeParam.length > 0) {
         urlStr = [urlStr stringByAppendingFormat:@"&type=%@", typeParam];
     }
- 
-    [self parseGeocodingResponseForURLString:urlStr completionHandler:completionHandler];
-}
-
-- (void)geocodeAddressString:(NSString *)addressString
-                    inRegion:(CLCircularRegion *)region
-           completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
     
-    [self geocodeAddressString:addressString inRegion:region withType:CSPlacemarkTypeAll limit:30 completionHandler:completionHandler];
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        urlStr = [urlStr stringByAppendingFormat:@"&%@=%@", key, obj];
+    }];
+    
+    [self parseGeocodingResponseForURLString:urlStr completionHandler:completionHandler];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString
@@ -275,6 +284,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
                  inProximity:(CLLocationCoordinate2D)coordinate
                     withType:(CSPlacemarkType)type
                        limit:(NSInteger)limit
+            customParameters:(nullable NSDictionary<NSString *, NSString *> *)parameters
            completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
     
     if (addressString.length == 0) {
@@ -284,7 +294,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
     int limitParam = MIN(MAX((int)limit, 1), 30);
 
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&proximity=%f,%f",
+    __block NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&proximity=%f,%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
                         self.mapID,
                         addressString,
@@ -297,6 +307,10 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
         urlStr = [urlStr stringByAppendingFormat:@"&type=%@", typeParam];
     }
     
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        urlStr = [urlStr stringByAppendingFormat:@"&%@=%@", key, obj];
+    }];
+
     [self parseGeocodingResponseForURLString:urlStr completionHandler:completionHandler];
 }
 
