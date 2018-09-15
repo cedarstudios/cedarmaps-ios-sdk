@@ -9,7 +9,7 @@
 import UIKit
 import CedarMaps
 
-class CSForwardGeocodeViewController: UIViewController {
+final class CSForwardGeocodeViewController: UIViewController {
 
     private var filteredResults = [CSForwardGeocodePlacemark]() {
         didSet {

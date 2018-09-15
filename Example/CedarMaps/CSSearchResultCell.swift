@@ -9,7 +9,7 @@
 import UIKit
 import CedarMaps
 
-class CSSearchResultCell: UITableViewCell {
+final class CSSearchResultCell: UITableViewCell {
     
     var placemark: CSForwardGeocodePlacemark! {
         didSet {

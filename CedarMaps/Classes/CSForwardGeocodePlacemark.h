@@ -92,13 +92,13 @@
 typedef void (^CSForwardGeocodeCompletionHandler)(NSArray<CSForwardGeocodePlacemark *> * __nullable placemarks, NSError * __nullable error);
 
 typedef NS_OPTIONS(NSUInteger, CSPlacemarkType) {
-    CSPlacemarkTypeAll        = 0,
-    CSPlacemarkTypeRoundabout = 1 << 0,
-    CSPlacemarkTypeStreet     = 1 << 1,
-    CSPlacemarkTypeFreeway    = 1 << 2,
-    CSPlacemarkTypeExpressway = 1 << 3,
-    CSPlacemarkTypeBoulevard  = 1 << 4,
-    CSPlacemarkTypeLocality   = 1 << 5,
-    CSPlacemarkTypePOI        = 1 << 6
+    CSPlacemarkTypeAll        = 1 << 0,
+    CSPlacemarkTypeRoundabout = 1 << 1,
+    CSPlacemarkTypeStreet     = 1 << 2,
+    CSPlacemarkTypeFreeway    = 1 << 3,
+    CSPlacemarkTypeExpressway = 1 << 4,
+    CSPlacemarkTypeBoulevard  = 1 << 5,
+    CSPlacemarkTypeLocality   = 1 << 6,
+    CSPlacemarkTypePOI        = 1 << 7
 };
 NSString* _Nonnull stringValueForPlacemarkType(CSPlacemarkType type);
