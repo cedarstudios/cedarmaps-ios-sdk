@@ -9,7 +9,7 @@
 import UIKit
 import CedarMaps
 
-class CSMapSnapshotViewController: KeyboardEntryViewController {
+final class CSMapSnapshotViewController: KeyboardEntryViewController {
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var hintLabel: UILabel!

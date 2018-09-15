@@ -162,6 +162,15 @@
 
 
 /**
+ Implementation is not final yet. DO NOT USE.
+ */
+- (void)geocodeAddressString:(nonnull NSString *)addressString
+                 inProximity:(CLLocationCoordinate2D)coordinate
+                    withType:(CSPlacemarkType)type
+                       limit:(NSInteger)limit
+           completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler;
+
+/**
  * This method calculates directions using car profile between a source and a destination.
  *
  * Up to 100 pairs of source and destionation points can be provided to calculate a multiple step routing.

@@ -271,6 +271,35 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     [self parseGeocodingResponseForURLString:urlStr completionHandler:completionHandler];
 }
 
+- (void)geocodeAddressString:(NSString *)addressString
+                 inProximity:(CLLocationCoordinate2D)coordinate
+                    withType:(CSPlacemarkType)type
+                       limit:(NSInteger)limit
+           completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
+    
+    if (addressString.length == 0) {
+        completionHandler(nil, [CSError errorWithDescription:@"Empty input"]);
+        return;
+    }
+
+    int limitParam = MIN(MAX((int)limit, 1), 30);
+
+    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&proximity=%f,%f",
+                        [CSAuthenticationManager.sharedAuthenticationManager baseURL],
+                        self.mapID,
+                        addressString,
+                        limitParam,
+                        coordinate.latitude,
+                        coordinate.longitude];
+    
+    NSString *typeParam = stringValueForPlacemarkType(type);
+    if (typeParam.length > 0) {
+        urlStr = [urlStr stringByAppendingFormat:@"&type=%@", typeParam];
+    }
+    
+    [self parseGeocodingResponseForURLString:urlStr completionHandler:completionHandler];
+}
+
 - (void)parseGeocodingResponseForURLString:(nonnull NSString *)urlStr
                          completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
     

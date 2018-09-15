@@ -9,7 +9,7 @@
 import UIKit
 import CedarMaps
 
-class CSReverseGeocodeViewController: UIViewController {
+final class CSReverseGeocodeViewController: UIViewController {
 
     @IBOutlet private weak var mapView: CSMapView! {
         didSet {
