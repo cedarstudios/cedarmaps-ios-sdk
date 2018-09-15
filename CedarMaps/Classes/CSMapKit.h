@@ -103,6 +103,22 @@
 
 /**
  This method will search for an address using the provided string query.
+ 
+ @param addressString The address query to search.
+ @param type The placemark types to include in search results. This can be a combination of values.
+ @param limit The maximum number of results to return.
+ @param parameters For internal usage
+ @param completionHandler This handler is called when the process of fetching forward geocode
+ * results is completed. The block will be called on the main_queue.
+ */
+- (void)geocodeAddressString:(nonnull NSString *)addressString
+                    withType:(CSPlacemarkType)type
+                       limit:(NSInteger)limit
+            customParameters:(nullable NSDictionary<NSString *, NSString *> *)parameters
+           completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler;
+
+/**
+ This method will search for an address using the provided string query.
 
  @param addressString The address query to search.
  @param region The circular region consisting of a center coordinate and a radius to limit the search results.
@@ -168,6 +184,7 @@
                  inProximity:(CLLocationCoordinate2D)coordinate
                     withType:(CSPlacemarkType)type
                        limit:(NSInteger)limit
+            customParameters:(nullable NSDictionary<NSString *, NSString *> *)parameters
            completionHandler:(nonnull CSForwardGeocodeCompletionHandler)completionHandler;
 
 /**
