@@ -99,6 +99,8 @@ typedef NS_OPTIONS(NSUInteger, CSPlacemarkType) {
     CSPlacemarkTypeExpressway = 1 << 4,
     CSPlacemarkTypeBoulevard  = 1 << 5,
     CSPlacemarkTypeLocality   = 1 << 6,
-    CSPlacemarkTypePOI        = 1 << 7
+    CSPlacemarkTypePOI        = 1 << 7,
+    CSPlacemarkTypeCity       = 1 << 8,
+    CSPlacemarkTypeState      = 1 << 9
 };
 NSString* _Nonnull stringValueForPlacemarkType(CSPlacemarkType type);

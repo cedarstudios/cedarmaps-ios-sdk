@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		301197921FA9C9190048E53D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 301197941FA9C9190048E53D /* Main.storyboard */; };
 		301197991FA9CB640048E53D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3011979B1FA9CB640048E53D /* Localizable.strings */; };
+		30616DF621D8D7EB00A1551C /* Pods_CedarMaps_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30616DF521D8D7EB00A1551C /* Pods_CedarMaps_Example.framework */; };
 		3099D1931F9F31E400CB85F2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099D1921F9F31E400CB85F2 /* Launch Screen.storyboard */; };
 		30CBE8E41FA666D6002D6F0F /* CSReverseGeocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */; };
 		30CBE8E61FA67BEE002D6F0F /* CSMapSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E51FA67BEE002D6F0F /* CSMapSnapshotViewController.swift */; };
@@ -24,7 +25,6 @@
 		6003F59E195388D20070C39A /* CSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* CSAppDelegate.m */; };
 		6003F5A7195388D20070C39A /* CSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* CSMapViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
-		B267679F63D83A3226F6C73B /* Pods_CedarMaps_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77747B60BCD1A8149C40ED6B /* Pods_CedarMaps_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +35,7 @@
 		3011979A1FA9CB640048E53D /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3011979C1FA9CB6C0048E53D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3060EFAC1FA9DAF900F1841E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		30616DF521D8D7EB00A1551C /* Pods_CedarMaps_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_CedarMaps_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3099D1921F9F31E400CB85F2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		30CBE8E21FA666D6002D6F0F /* CedarMaps_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CedarMaps_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSReverseGeocodeViewController.swift; sourceTree = "<group>"; };
@@ -78,7 +79,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				B267679F63D83A3226F6C73B /* Pods_CedarMaps_Example.framework in Frameworks */,
+				30616DF621D8D7EB00A1551C /* Pods_CedarMaps_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +109,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30616DF521D8D7EB00A1551C /* Pods_CedarMaps_Example.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,

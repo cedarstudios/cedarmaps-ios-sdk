@@ -70,6 +70,12 @@ NSString* stringValueForPlacemarkType(CSPlacemarkType type) {
     if (type & CSPlacemarkTypePOI) {
         result = [result stringByAppendingString:@"poi,"];
     }
+    if (type & CSPlacemarkTypeCity) {
+        result = [result stringByAppendingString:@"city,"];
+    }
+    if (type & CSPlacemarkTypeState) {
+        result = [result stringByAppendingString:@"state,"];
+    }
     if (result.length > 1) {
         result = [result substringToIndex:result.length - 1];
     }

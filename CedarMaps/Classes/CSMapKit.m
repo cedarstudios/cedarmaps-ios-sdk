@@ -5,12 +5,15 @@
 #import "CSReverseGeocodeResponse.h"
 #import "CSForwardGeocodeResponse.h"
 #import "CSDirectionResponse.h"
+#import <sys/utsname.h>
+#import <TargetConditionals.h>
 
 typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error);
 
 @interface CSMapKit ()
 
 @property (nonatomic, strong, nonnull) NSString *directionProfile;
+@property (nonatomic, strong, nonnull) NSString *userAgent;
 
 @end
 
@@ -32,10 +35,82 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     static id _sharedSession = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        configuration.HTTPAdditionalHeaders = @{@"User-Agent": [[CSMapKit sharedMapKit] userAgent]};
+        _sharedSession = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     });
     
     return _sharedSession;
+}
+
+- (NSString *)userAgent {
+    if (!_userAgent) {
+        NSMutableArray<NSString *> *components = [[NSMutableArray alloc] init];
+
+        NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+        if (!appName) {
+            appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+        }
+        if (appName) {
+            NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            if (!version) {
+                version = @"";
+            }
+            NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            if (!build) {
+                build = @"";
+            }
+            [components addObject:[NSString stringWithFormat:@"%@/%@(%@)", appName, version, build]];
+        }
+
+        NSString *locale = [[NSLocale preferredLanguages] firstObject];
+        if (locale) {
+            [components addObject:locale];
+        }
+        
+        NSString *system;
+#if TARGET_OS_SIMULATOR
+        system = @"Simulator";
+#elif TARGET_OS_IOS
+        system = @"iOS";
+#elif TARGET_OS_WATCH
+        system = @"watchOS";
+#elif TARGET_OS_TV
+        system = @"tvOS";
+#elif TARGET_OS_UNIX
+        system = @"Unix";
+#elif TARGET_OS_MAC
+        system = @"macOS"
+#else
+        system = @"Unknown";
+#endif
+
+        NSOperatingSystemVersion systemVersion = [[[NSProcessInfo alloc] init] operatingSystemVersion];
+        [components addObject:[NSString stringWithFormat:@"%@/%li.%li.%li", system, (long)systemVersion.majorVersion, (long)systemVersion.minorVersion, (long)systemVersion.patchVersion]];
+        
+        struct utsname systemInfo;
+        uname(&systemInfo);
+        NSString *identifier = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+        [components addObject:identifier];
+
+        NSString *chip;
+#if TARGET_CPU_X86_64
+        chip = @"x86_64";
+#elif TARGET_CPU_X86
+        chip = @"i386";
+#elif TARGET_CPU_ARM
+        chip = @"arm";
+#elif TARGET_CPU_ARM64
+        chip = @"arm64";
+#else
+        chip = @"Unknown";
+#endif
+        [components addObject:[NSString stringWithFormat:@"(%@)", chip]];
+        
+        _userAgent = [components componentsJoinedByString:@" "];
+    }
+    
+    return _userAgent;
 }
 
 - (void)setCredentialsWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret {
@@ -167,14 +242,14 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
 - (void)geocodeAddressString:(NSString *)addressString
            completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
-    [self geocodeAddressString:addressString withType:CSPlacemarkTypeAll limit:30 completionHandler:completionHandler];
+    [self geocodeAddressString:addressString withType:CSPlacemarkTypeAll limit:30 customParameters:nil completionHandler:completionHandler];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString
                     withType:(CSPlacemarkType)type
                        limit:(NSInteger)limit
            completionHandler:(CSForwardGeocodeCompletionHandler)completionHandler {
-    [self geocodeAddressString:addressString withType:type limit:limit completionHandler:completionHandler];
+    [self geocodeAddressString:addressString withType:type limit:limit customParameters:nil completionHandler:completionHandler];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString

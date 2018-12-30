@@ -14,8 +14,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-    [[CSMapKit sharedMapKit] setCredentialsWithClientID:@"YOUR_CLIENT_ID"
-                                           clientSecret:@"YOUR_CLIENT_SECRET"];
+    [[CSMapKit sharedMapKit] setCredentialsWithClientID:@"CLIENT_ID"
+                                           clientSecret:@"CLIENT_STREET"];
     [[CSMapKit sharedMapKit] setMapID:@"cedarmaps.mix"];
     
     [[CSMapKit sharedMapKit] prepareMapTiles:^(BOOL isReady, NSError * _Nullable error) {

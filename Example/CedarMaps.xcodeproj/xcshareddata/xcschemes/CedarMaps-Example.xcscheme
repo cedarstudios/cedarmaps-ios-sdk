@@ -74,11 +74,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-AppleLanguages &quot;(fa)&quot;"
+            argument = "-AppleLocale &quot;fa-IR&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-AppleLocale &quot;fa_IR&quot;"
+            argument = "-AppleLanguages &quot;(fa)&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
