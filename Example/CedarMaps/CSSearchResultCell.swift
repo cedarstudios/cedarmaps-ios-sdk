@@ -85,7 +85,9 @@ extension CSForwardGeocodePlacemark {
             "street": "خیابان",
             "locality": "محله",
             "poi": "مکان",
-            "region": "منطقه"
+            "region": "منطقه",
+            "city": "شهر",
+            "state": "استان"
         ]
         return streetType[type] ?? "نامشخص"
     }
