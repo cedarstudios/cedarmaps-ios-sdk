@@ -13,6 +13,7 @@
 		3099D1931F9F31E400CB85F2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099D1921F9F31E400CB85F2 /* Launch Screen.storyboard */; };
 		30CBE8E41FA666D6002D6F0F /* CSReverseGeocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */; };
 		30CBE8E61FA67BEE002D6F0F /* CSMapSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E51FA67BEE002D6F0F /* CSMapSnapshotViewController.swift */; };
+		30D4C546228161960052D126 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30D4C545228161960052D126 /* Credentials.plist */; };
 		30E1A9F01FA74F9C00FFACFA /* KeyboardEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9EF1FA74F9C00FFACFA /* KeyboardEntryViewController.swift */; };
 		30E1A9F31FA75D7A00FFACFA /* CSDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9F21FA75D7A00FFACFA /* CSDirectionsViewController.m */; };
 		30E1A9F51FA8625B00FFACFA /* CSForwardGeocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9F41FA8625B00FFACFA /* CSForwardGeocodeViewController.swift */; };
@@ -40,6 +41,7 @@
 		30CBE8E21FA666D6002D6F0F /* CedarMaps_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CedarMaps_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSReverseGeocodeViewController.swift; sourceTree = "<group>"; };
 		30CBE8E51FA67BEE002D6F0F /* CSMapSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSMapSnapshotViewController.swift; sourceTree = "<group>"; };
+		30D4C545228161960052D126 /* Credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
 		30E1A9EF1FA74F9C00FFACFA /* KeyboardEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardEntryViewController.swift; sourceTree = "<group>"; };
 		30E1A9F11FA75D7A00FFACFA /* CSDirectionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDirectionsViewController.h; sourceTree = "<group>"; };
 		30E1A9F21FA75D7A00FFACFA /* CSDirectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDirectionsViewController.m; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* CedarMaps-Prefix.pch */,
 				3011979B1FA9CB640048E53D /* Localizable.strings */,
+				30D4C545228161960052D126 /* Credentials.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				301197991FA9CB640048E53D /* Localizable.strings in Resources */,
 				301197921FA9C9190048E53D /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				30D4C546228161960052D126 /* Credentials.plist in Resources */,
 				3099D1931F9F31E400CB85F2 /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
