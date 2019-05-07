@@ -134,22 +134,6 @@
     return annotationImage;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    CGFloat rightInset = self.contentInset.right + 8;
-    CGFloat bottomInset = self.contentInset.bottom + 8;
-    if (@available(iOS 11.0, *)) {
-        rightInset += self.safeAreaInsets.right;
-        bottomInset += self.safeAreaInsets.bottom;
-    }
-    
-    self.logoView.frame = CGRectMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(self.logoView.bounds) - rightInset,
-                                     CGRectGetHeight(self.bounds) - CGRectGetHeight(self.logoView.bounds) - bottomInset,
-                                     CGRectGetWidth(self.logoView.bounds),
-                                     CGRectGetHeight(self.logoView.bounds));
-}
-
 - (NSBundle *)assetsBundle {
     NSBundle *podBundle = [NSBundle bundleForClass:[self classForCoder]];
     NSURL *bundleURL = [podBundle URLForResource:@"Assets" withExtension:@"bundle"];
