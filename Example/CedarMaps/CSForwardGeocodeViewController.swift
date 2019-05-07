@@ -54,7 +54,7 @@ final class CSForwardGeocodeViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.estimatedRowHeight = 44.0
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.alpha = 0
             tableView.keyboardDismissMode = .onDrag
         }
