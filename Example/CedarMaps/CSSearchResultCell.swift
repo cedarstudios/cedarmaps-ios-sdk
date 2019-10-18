@@ -87,7 +87,10 @@ extension CSForwardGeocodePlacemark {
             "poi": "مکان",
             "region": "منطقه",
             "city": "شهر",
-            "state": "استان"
+            "state": "استان",
+			"village": "روستا",
+			"town": "شهرک",
+			"junction": "تقاطع"
         ]
         return streetType[type] ?? "نامشخص"
     }

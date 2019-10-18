@@ -8,6 +8,11 @@
 #import "CSMapSnapshotOptions.h"
 
 
+typedef NSString * CSMapIndex NS_STRING_ENUM;
+static CSMapIndex const _Nonnull CSMapIndexStreets = @"cedarmaps.streets";
+static CSMapIndex const _Nonnull CSMapIndexPlaces = @"cedarmaps.places";
+static CSMapIndex const _Nonnull CSMapIndexMix = @"cedarmaps.mix";
+
 /**
  * This class is the single point entry for using CedarMaps API on iOS.
  * The setup and using methods process are done through this class.
@@ -49,10 +54,15 @@
 
 /**
  * Use this property to control result types.
- * Possible values are "cedarmaps.streets" and "cedarmaps.mix".
- * By setting "cedarmaps.mix", POI search results are available.
+ * Possible values are "cedarmaps.streets", "cedarmaps.places" and "cedarmaps.mix".
+ * This is deprecated. Use `mapIndex` instead.
  */
-@property (nonatomic, strong, nonnull) NSString *mapID;
+@property (nonatomic, strong, nonnull) NSString *mapID DEPRECATED_MSG_ATTRIBUTE("Use `mapIndex` instead");
+
+/**
+ * Use this property to control result types in geocoding requests.
+ */
+@property (nonatomic, strong, nonnull) CSMapIndex mapIndex;
 
 /**
  This method should be called before using CedarMaps map tiles using CSMapView.
@@ -74,6 +84,20 @@
 - (void)reverseGeocodeLocation:(nonnull CLLocation *)location
              completionHandler:(nonnull CSReverseGeocodeCompletionHandler)completionHandler;
 
+
+/// This method will get you the textual address components related to a particular coordiante.
+/// @param location The location for which the address components would be generated.
+/// @param addressFormat Format string for generated formatted address. e.g. "{country}{province}{sep}{city}{sep}{locality}{sep}{district}{sep}{address}{sep}{place}"
+/// @param formattedAddressPrefixLength Length of streets prefix in generated formatted address. Default is short.
+/// @param separator The separator used in generated formatted address. Default is "، "
+/// @param shouldOutputVerboseFormattedAddress A boolean indicating if extra information should be included in generated formatted address such as نرسیده به and بعد از.
+/// @param completionHandler This handler is called when the process of fetching reverse geocode result is completed. The block will be called on the main_queue.
+- (void)reverseGeocodeLocation:(nonnull CLLocation *)location
+				 addressFormat:(nullable NSString *)addressFormat
+  formattedAddressPrefixLength:(nonnull CSReverseGeocodeFormattedAddressPrefixLength)formattedAddressPrefixLength
+	 formattedAddressSeparator:(nullable NSString *)separator
+	 formattedAddressVerbosity:(BOOL)shouldOutputVerboseFormattedAddress
+			 completionHandler:(nonnull CSReverseGeocodeCompletionHandler)completionHandler;
 
 /**
  This method will search for an address using the provided string query.

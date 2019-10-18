@@ -101,6 +101,10 @@ typedef NS_OPTIONS(NSUInteger, CSPlacemarkType) {
     CSPlacemarkTypeLocality   = 1 << 6,
     CSPlacemarkTypePOI        = 1 << 7,
     CSPlacemarkTypeCity       = 1 << 8,
-    CSPlacemarkTypeState      = 1 << 9
+    CSPlacemarkTypeState      = 1 << 9,
+	CSPlacemarkTypeVillage	  = 1 << 10,
+	CSPlacemarkTypeTown		  = 1 << 11,
+	CSPlacemarkTypeJunction	  = 1 << 12,
+	CSPlacemarkTypeRegion	  = 1 << 13
 };
 NSString* _Nonnull stringValueForPlacemarkType(CSPlacemarkType type);

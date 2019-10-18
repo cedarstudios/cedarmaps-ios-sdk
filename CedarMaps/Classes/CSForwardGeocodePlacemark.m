@@ -76,6 +76,18 @@ NSString* stringValueForPlacemarkType(CSPlacemarkType type) {
     if (type & CSPlacemarkTypeState) {
         result = [result stringByAppendingString:@"state,"];
     }
+    if (type & CSPlacemarkTypeVillage) {
+        result = [result stringByAppendingString:@"village,"];
+    }
+    if (type & CSPlacemarkTypeTown) {
+        result = [result stringByAppendingString:@"town,"];
+    }
+    if (type & CSPlacemarkTypeJunction) {
+        result = [result stringByAppendingString:@"junction,"];
+    }
+    if (type & CSPlacemarkTypeRegion) {
+        result = [result stringByAppendingString:@"region,"];
+    }
     if (result.length > 1) {
         result = [result substringToIndex:result.length - 1];
     }

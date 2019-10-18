@@ -13,6 +13,7 @@
     return @{
              @"components": @"components",
              @"address": @"address",
+			 @"formattedAddress": @"formatted_address",
              @"locality": @"locality",
              @"district": @"district",
              @"place": @"place",

@@ -13,6 +13,7 @@
 		3099D1931F9F31E400CB85F2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099D1921F9F31E400CB85F2 /* Launch Screen.storyboard */; };
 		30CBE8E41FA666D6002D6F0F /* CSReverseGeocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */; };
 		30CBE8E61FA67BEE002D6F0F /* CSMapSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBE8E51FA67BEE002D6F0F /* CSMapSnapshotViewController.swift */; };
+		30D4C546228161960052D126 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30D4C545228161960052D126 /* Credentials.plist */; };
 		30E1A9F01FA74F9C00FFACFA /* KeyboardEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9EF1FA74F9C00FFACFA /* KeyboardEntryViewController.swift */; };
 		30E1A9F31FA75D7A00FFACFA /* CSDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9F21FA75D7A00FFACFA /* CSDirectionsViewController.m */; };
 		30E1A9F51FA8625B00FFACFA /* CSForwardGeocodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E1A9F41FA8625B00FFACFA /* CSForwardGeocodeViewController.swift */; };
@@ -40,6 +41,7 @@
 		30CBE8E21FA666D6002D6F0F /* CedarMaps_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CedarMaps_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		30CBE8E31FA666D6002D6F0F /* CSReverseGeocodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSReverseGeocodeViewController.swift; sourceTree = "<group>"; };
 		30CBE8E51FA67BEE002D6F0F /* CSMapSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSMapSnapshotViewController.swift; sourceTree = "<group>"; };
+		30D4C545228161960052D126 /* Credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
 		30E1A9EF1FA74F9C00FFACFA /* KeyboardEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardEntryViewController.swift; sourceTree = "<group>"; };
 		30E1A9F11FA75D7A00FFACFA /* CSDirectionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDirectionsViewController.h; sourceTree = "<group>"; };
 		30E1A9F21FA75D7A00FFACFA /* CSDirectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDirectionsViewController.m; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* CedarMaps-Prefix.pch */,
 				3011979B1FA9CB640048E53D /* Localizable.strings */,
+				30D4C545228161960052D126 /* Credentials.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -227,13 +230,13 @@
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = 9W7F9DN6CW;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1110;
 					};
 				};
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "CedarMaps" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -258,6 +261,7 @@
 				301197991FA9CB640048E53D /* Localizable.strings in Resources */,
 				301197921FA9C9190048E53D /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				30D4C546228161960052D126 /* Credentials.plist in Resources */,
 				3099D1931F9F31E400CB85F2 /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -272,11 +276,13 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CedarMaps_Example/Pods-CedarMaps_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CedarMaps_Example/Pods-CedarMaps_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CedarMaps/CedarMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/F6FDF133-0198-394E-9C8F-5043F94B4790.bcsymbolmap",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/B4615DAE-86F8-35AB-B4D1-B1F1420E374A.bcsymbolmap",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -284,10 +290,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mantle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/F6FDF133-0198-394E-9C8F-5043F94B4790.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/B4615DAE-86F8-35AB-B4D1-B1F1420E374A.bcsymbolmap",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CedarMaps_Example/Pods-CedarMaps_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CedarMaps_Example/Pods-CedarMaps_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DEF05AF81CFF459B1D56D1B1 /* [CP] Check Pods Manifest.lock */ = {
@@ -418,7 +426,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -465,7 +473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -479,17 +487,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 191018;
 				DEVELOPMENT_TEAM = 9W7F9DN6CW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CedarMaps/CedarMaps-Prefix.pch";
 				INFOPLIST_FILE = "CedarMaps/CedarMaps-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CedarMaps/CedarMaps_Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -500,16 +510,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 191018;
 				DEVELOPMENT_TEAM = 9W7F9DN6CW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CedarMaps/CedarMaps-Prefix.pch";
 				INFOPLIST_FILE = "CedarMaps/CedarMaps-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CedarMaps/CedarMaps_Example-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

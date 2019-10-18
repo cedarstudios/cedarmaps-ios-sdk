@@ -1,17 +1,17 @@
 PODS:
-  - CedarMaps (3.1.2):
+  - CedarMaps (3.3.0):
     - Mantle (~> 2.1)
-    - Mapbox-iOS-SDK (~> 4.0)
+    - Mapbox-iOS-SDK (~> 5.0)
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - Mapbox-iOS-SDK (4.7.1)
+  - Mapbox-iOS-SDK (5.4.0)
 
 DEPENDENCIES:
   - CedarMaps (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Mantle
     - Mapbox-iOS-SDK
 
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CedarMaps: bcdfbaba6cbb00420e636ee40bab7849442c7693
+  CedarMaps: 92a00ad88be37c3a27fa9ea792a60ba8e296e428
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  Mapbox-iOS-SDK: f9292a75e8cd5eb828f4432623bfc48aac42146a
+  Mapbox-iOS-SDK: 2b58f752d94e57e95b8e54f3b52569199f6efdba
 
-PODFILE CHECKSUM: ad43b9956cf1f58bff64834a5e21f42f322108fa
+PODFILE CHECKSUM: 22c792ae72b57ef3c767a871470d27771eecbe12
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.3

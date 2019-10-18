@@ -46,7 +46,7 @@ final class CSForwardGeocodeViewController: UIViewController {
     @IBOutlet private weak var mapView: CSMapView! {
         didSet {
             mapView.delegate = self
-            mapView.styleURL = URL(string: "https://api.cedarmaps.com/v1/tiles/light.json")
+			mapView.styleURL = URL(string: CSMapViewStyle.rasterLight.rawValue)
         }
     }
     @IBOutlet private weak var tableView: UITableView! {
@@ -54,7 +54,7 @@ final class CSForwardGeocodeViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.estimatedRowHeight = 44.0
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.alpha = 0
             tableView.keyboardDismissMode = .onDrag
         }

@@ -48,18 +48,18 @@ class KeyboardEntryViewController: UIViewController, UITextFieldDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc private func keyboardDidShow(_ notification: Foundation.Notification) {
         if let userInfo = (notification as NSNotification).userInfo {
-            if let notificationValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            if let notificationValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 
                 let keyboardFrame = notificationValue.cgRectValue
                 _keyboardHeight = keyboardFrame.size.height
@@ -67,13 +67,13 @@ class KeyboardEntryViewController: UIViewController, UITextFieldDelegate, UIText
                 let scrollViewRectInWindow = mainScrollView.convert(mainScrollView.bounds, to: nil)
                 
                 if scrollViewRectInWindow.origin.y + scrollViewRectInWindow.size.height < keyboardFrame.origin.y {
-                    mainScrollView.contentInset = UIEdgeInsetsMake(mainScrollView.contentInset.top, mainScrollView.contentInset.left, 0, mainScrollView.contentInset.right)
+                    mainScrollView.contentInset = UIEdgeInsets(top: mainScrollView.contentInset.top, left: mainScrollView.contentInset.left, bottom: 0, right: mainScrollView.contentInset.right)
                     mainScrollView.scrollIndicatorInsets = mainScrollView.contentInset
                     
                     return
                 }
                 
-                mainScrollView.contentInset = UIEdgeInsetsMake(mainScrollView.contentInset.top, mainScrollView.contentInset.left, mainScrollView.frame.size.height - keyboardFrame.origin.y + scrollViewRectInWindow.origin.y, mainScrollView.contentInset.right)
+                mainScrollView.contentInset = UIEdgeInsets(top: mainScrollView.contentInset.top, left: mainScrollView.contentInset.left, bottom: mainScrollView.frame.size.height - keyboardFrame.origin.y + scrollViewRectInWindow.origin.y, right: mainScrollView.contentInset.right)
                 mainScrollView.scrollIndicatorInsets = mainScrollView.contentInset
                 
                 if let activeTextField = activeTextField {
@@ -105,7 +105,7 @@ class KeyboardEntryViewController: UIViewController, UITextFieldDelegate, UIText
     
     @objc private func keyboardWillHide(_ notification: Foundation.Notification) {
         _keyboardHeight = 0
-        mainScrollView.contentInset = UIEdgeInsetsMake(mainScrollView.contentInset.top, mainScrollView.contentInset.left, 0, mainScrollView.contentInset.right)
+        mainScrollView.contentInset = UIEdgeInsets(top: mainScrollView.contentInset.top, left: mainScrollView.contentInset.left, bottom: 0, right: mainScrollView.contentInset.right)
         mainScrollView.scrollIndicatorInsets = mainScrollView.contentInset
     }
 

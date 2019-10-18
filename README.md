@@ -2,7 +2,7 @@
 
 This guide will take you through the process of integrating CedarMaps into your iOS application.
 
-All the mentioned methods and tools in this document are tested on Xcode v9.3.
+All the mentioned methods and tools in this document are tested on Xcode 11.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -64,7 +64,7 @@ CSMapKit.shared.setAPIBaseURL("API_BASE_URL")
 
 ### Mapbox
 
-CedarMaps SDK is based on [Mapbox iOS SDK v4.0](https://github.com/mapbox/mapbox-gl-native) and provides extra API methods over Mapbox. 
+CedarMaps SDK is based on [Mapbox iOS SDK](https://github.com/mapbox/mapbox-gl-native) and provides extra API methods over Mapbox. 
 For more information about how to use Mapbox components and methods such as **Adding Markers**, **Showing Current Location**, etc., please see [Mapbox Getting Started](https://www.mapbox.com/help/first-steps-ios-sdk/).
 
 #### CSMapView
@@ -89,11 +89,11 @@ You can set various style URLs to instances of `CSMapView`:
 ```swift
 mapView.styleUrl = "STYLE_URL"
 
-// Light Vector (Default): "https://api.cedarmaps.com/v1/styles/cedarmaps.light.json"
-// Dark Vector: "https://api.cedarmaps.com/v1/styles/cedarmaps.dark.json"
-// Raster: "https://api.cedarmaps.com/v1/tiles/light.json"
+// Light Vector (Default): "CSMapViewStyleURLVectorLight"
+// Dark Vector: "CSMapViewStyleURLVectorDark"
+// Raster: "CSMapViewStyleURLRasterLight"
 ```
-Make sure to use your base URL if you have one.
+Make sure to use the expanded version with your own base URL if you have one.
 
 
 ## API Methods

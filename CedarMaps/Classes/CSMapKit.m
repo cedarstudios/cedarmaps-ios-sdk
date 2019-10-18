@@ -144,6 +144,13 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     return _mapID;
 }
 
+- (CSMapIndex)mapIndex {
+	if (!_mapIndex) {
+		_mapIndex = CSMapIndexStreets;
+	}
+	return _mapIndex;
+}
+
 - (NSString *)directionProfile {
     if (!_directionProfile) {
         _directionProfile = @"cedarmaps.driving";
@@ -198,12 +205,36 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
 - (void)reverseGeocodeLocation:(CLLocation *)location completionHandler:(CSReverseGeocodeCompletionHandler)completionHandler {
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%f,%f.json",
+	[self reverseGeocodeLocation:location addressFormat:nil formattedAddressPrefixLength:CSReverseGeocodeFormattedAddressPrefixLengthShort formattedAddressSeparator:nil formattedAddressVerbosity:NO completionHandler:completionHandler];
+}
+
+- (void)reverseGeocodeLocation:(CLLocation *)location
+				 addressFormat:(NSString *)addressFormat
+  formattedAddressPrefixLength:(CSReverseGeocodeFormattedAddressPrefixLength)formattedAddressPrefixLength
+	 formattedAddressSeparator:(NSString *)separator
+	 formattedAddressVerbosity:(BOOL)shouldOutputVerboseFormattedAddress
+			 completionHandler:(CSReverseGeocodeCompletionHandler)completionHandler {
+	
+    NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%f,%f.json?prefix=%@",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
-                        self.mapID,
+                        self.mapIndex,
                         location.coordinate.latitude,
-                        location.coordinate.longitude];
+                        location.coordinate.longitude,
+						formattedAddressPrefixLength
+						];
     
+    if (addressFormat && addressFormat.length > 0) {
+        urlStr = [urlStr stringByAppendingFormat:@"&format=%@", addressFormat];
+    }
+		
+    if (separator) {
+        urlStr = [urlStr stringByAppendingFormat:@"&separator=%@", separator];
+    }
+
+	if (shouldOutputVerboseFormattedAddress) {
+        urlStr = [urlStr stringByAppendingFormat:@"&verbosity=%@", @"true"];
+	}
+	
     __weak CSMapKit *weakSelf = self;
     [self responseFromURLString:urlStr completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         [weakSelf handleHTTPErrorsForResponse:response];
@@ -272,7 +303,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     
     __block NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
-                        self.mapID,
+                        self.mapIndex,
                         addressString,
                         limitParam];
     
@@ -303,7 +334,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     
     NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&location=%f,%f&distance=%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
-                        self.mapID,
+                        self.mapIndex,
                         addressString,
                         limitParam,
                         region.center.latitude,
@@ -339,7 +370,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
     
     NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&ne=%f,%f&sw=%f,%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
-                        self.mapID,
+                        self.mapIndex,
                         addressString,
                         limitParam,
                         boundingBox.northEast.coordinate.latitude,
@@ -371,7 +402,7 @@ typedef void (^CSNetworkResponseCompletionHandler)(NSData * _Nullable data, NSUR
 
     __block NSString *urlStr = [NSString stringWithFormat:@"%@geocode/%@/%@?limit=%i&proximity=%f,%f",
                         [CSAuthenticationManager.sharedAuthenticationManager baseURL],
-                        self.mapID,
+                        self.mapIndex,
                         addressString,
                         limitParam,
                         coordinate.latitude,

@@ -8,6 +8,10 @@
 #import <UIKit/UIKit.h>
 #import <Mapbox/Mapbox.h>
 
+typedef NSString * CSMapViewStyle NS_STRING_ENUM;
+static CSMapViewStyle const _Nonnull CSMapViewStyleVectorLight = @"https://api.cedarmaps.com/v1/styles/cedarmaps.light.json";
+static CSMapViewStyle const _Nonnull CSMapViewStyleVectorDark = @"https://api.cedarmaps.com/v1/styles/cedarmaps.dark.json";
+static CSMapViewStyle const _Nonnull CSMapViewStyleRasterLight = @"https://api.cedarmaps.com/v1/tiles/light.json";
 
 /**
  * A subclass of MGLMapView tailored for using with CedarMaps tiles.

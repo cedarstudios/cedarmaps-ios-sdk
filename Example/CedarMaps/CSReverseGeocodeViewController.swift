@@ -14,7 +14,7 @@ final class CSReverseGeocodeViewController: UIViewController {
     @IBOutlet private weak var mapView: CSMapView! {
         didSet {
             mapView.delegate = self
-            mapView.styleURL = URL(string: "https://api.cedarmaps.com/v1/styles/cedarmaps.dark.json")
+			mapView.styleURL = URL(string: CSMapViewStyle.vectorDark.rawValue)
         }
     }
     @IBOutlet private weak var labelBackgroundView: UIView! {
@@ -55,14 +55,19 @@ final class CSReverseGeocodeViewController: UIViewController {
         label.isHidden = true
         
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        CSMapKit.shared.reverseGeocodeLocation(location) { [weak self] (placemark, error) in
+		
+        CSMapKit.shared.reverseGeocodeLocation(location,
+											   addressFormat: nil,
+											   formattedAddressPrefixLength: .short,
+											   formattedAddressSeparator: nil,
+											   formattedAddressVerbosity: false) { [weak self] (placemark, error) in
             defer {
                 self?.spinner.stopAnimating()
                 self?.spinner.isHidden = true
                 self?.label.isHidden = false
             }
             if let placemark = placemark {
-                self?.label.text = placemark.fullAddress
+                self?.label.text = placemark.formattedAddress ?? "No address available"
             } else if let error = error {
                 self?.label.text = error.localizedDescription
             }
@@ -75,48 +80,3 @@ extension CSReverseGeocodeViewController: MGLMapViewDelegate {
         reverseGeocode(coordinate: mapView.centerCoordinate)
     }
 }
-
-extension CSReverseGeocodePlacemark {
-    var fullAddress: String {
-        var result = ""
-        
-        if let province = province, !province.isEmpty {
-            result += "استان " + province;
-        }
-        
-        if let city = city, !city.isEmpty {
-            if result.isEmpty {
-                result = city
-            } else {
-                result += "، " + city
-            }
-        }
-        
-        if let locality = locality, !locality.isEmpty {
-            if result.isEmpty {
-                result = locality
-            } else {
-                result += "، " + locality
-            }
-        }
-        
-        if let address = address, !address.isEmpty {
-            if result.isEmpty {
-                result = address
-            } else {
-                result += "، " + address
-            }
-        }
-        
-        if let place = place, !place.isEmpty {
-            if result.isEmpty {
-                result = place
-            } else {
-                result += "، " + place
-            }
-        }
-        
-        return result
-    }
-}
-

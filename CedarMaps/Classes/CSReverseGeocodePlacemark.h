@@ -7,6 +7,11 @@
 
 #import <Mantle/Mantle.h>
 
+typedef NSString * CSReverseGeocodeFormattedAddressPrefixLength NS_STRING_ENUM;
+static CSReverseGeocodeFormattedAddressPrefixLength const _Nonnull CSReverseGeocodeFormattedAddressPrefixLengthShort = @"short";
+static CSReverseGeocodeFormattedAddressPrefixLength const _Nonnull CSReverseGeocodeFormattedAddressPrefixLengthLong = @"long";
+static CSReverseGeocodeFormattedAddressPrefixLength const _Nonnull CSReverseGeocodeFormattedAddressPrefixLengthNone = @"none";
+
 @class CSTrafficZone;
 @class CSReverseGeocodeComponent;
 
@@ -28,6 +33,11 @@
  */
 @property (nonatomic, strong, nullable) NSString *locality;
 
+
+/**
+ Generated formatted address for the result.
+ */
+@property (nonatomic, strong, nullable) NSString *formattedAddress;
 
 /**
  District name for the result.
