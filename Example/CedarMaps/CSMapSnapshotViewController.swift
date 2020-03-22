@@ -79,7 +79,7 @@ final class CSMapSnapshotViewController: KeyboardEntryViewController {
         spinner.startAnimating()
         hintLabel.isHidden = true
         submitButton.isEnabled = false
-        
+
         CSMapKit.shared.createMapSnapshot(with: options) { [weak self] (snapshot, error) in
             self?.spinner.stopAnimating()
             self?.spinner.isHidden = true

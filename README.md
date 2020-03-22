@@ -139,10 +139,10 @@ open func reverseGeocodeLocation(_ location: CLLocation, completionHandler: @esc
 This method calculates the direction between points. It can be called with up to 50 different pairs in a single request.
 
 ```objc
-- (void)calculateDirections:(nonnull NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
+- (void)calculateDirectionsFromSource:(nonnull CLLocation *)source toDestinations:(nonnull NSArray<CLLocation *> *)destinations withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
 ```
 ```swift
-open func calculateDirections(_ routePairs: [CSRoutePair], withCompletionHandler completionHandler: @escaping CSDirectionCompletionHandler)
+open func calculateDirections(fromSource: CLLocation, destinations: [CLLocation], withCompletionHandler completionHandler: @escaping CSDirectionCompletionHandler)
 ```
 
 ### Distance

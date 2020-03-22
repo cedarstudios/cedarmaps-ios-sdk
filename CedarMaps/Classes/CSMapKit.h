@@ -214,27 +214,29 @@ static CSMapIndex const _Nonnull CSMapIndexMix = @"cedarmaps.mix";
 /**
  * This method calculates directions using car profile between a source and a destination.
  *
- * Up to 100 pairs of source and destionation points can be provided to calculate a multiple step routing.
+ * Up to 50 destionation points can be provided to calculate a multiple step routing.
 
- @param routePairs An array of CSRoutePair consisting of source and destination points.
+ @param source  Source location of the route.
+ @param destinations Destination locations for the route. Middle points and final location.
  @param completionHandler This handler is called when the process of fetching direction
  * results is completed. The block will be called on the main_queue.
  @see CSRoutePair.h
  */
-- (void)calculateDirections:(nonnull NSArray<CSRoutePair *> *)routePairs withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
+- (void)calculateDirectionsFromSource:(nonnull CLLocation *)source toDestinations:(nonnull NSArray<CLLocation *> *)destinations withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
 
 /**
  * This method calculates directions with verbal instructions using car profile between a source and a destination.
  *
- * Up to 100 pairs of source and destionation points can be provided to calculate a multiple step routing.
- 
- @param routePairs An array of CSRoutePair consisting of source and destination points.
+ * Up to 50 destionation points can be provided to calculate a multiple step routing.
+
+ @param source  Source location of the route.
+ @param destinations Destination locations for the route. Middle points and final location.
  @param locale The locale for instruction. Currently supports "en" and "fa"
  @param completionHandler This handler is called when the process of fetching direction
  * results is completed. The block will be called on the main_queue.
  @see CSRoutePair.h
  */
-- (void)calculateDirectionsWithInstructionsForRoutePairs:(nonnull NSArray<CSRoutePair *> *)routePairs locale:(nonnull NSLocale *)locale withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
+- (void)calculateDirectionsWithInstructionsFromSource:(nonnull CLLocation *)source toDestinations:(nonnull NSArray<CLLocation *> *)destinations locale:(nonnull NSLocale *)locale withCompletionHandler:(nonnull CSDirectionCompletionHandler)completionHandler;
 
 /**
  * This method calculates distance using car profile between a source and a destination.
