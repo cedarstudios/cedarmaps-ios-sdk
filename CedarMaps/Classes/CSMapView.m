@@ -58,6 +58,7 @@
 - (void)initialSetup {
     NSBundle *bundle = [self assetsBundle];
     [self.logoView setImage:[UIImage imageNamed:@"cedarmaps" inBundle:bundle compatibleWithTraitCollection:nil]];
+	[self.logoView setContentMode:UIViewContentModeScaleAspectFit];
     self.attributionButton.alpha = 0;
     self.layer.backgroundColor = [UIColor colorWithRed: 249.0/255.0 green: 245.0/255.0 blue: 237.0/255.0 alpha: 1.0].CGColor;
     
